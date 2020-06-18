@@ -8,14 +8,14 @@ const { Option } = Select;
 
 import { observer } from "mobx-react-lite";
 
-import deep from "./deep";
+import deep from "../deep";
 
 import { BoundComponentProps } from "./BoundComponent";
-import { StyledFormItem } from "./StyledComponents";
+import { StyledFormItem } from "../StyledComponents";
 
 export interface OptionProps {
 	value: number | string;
-	label: string;
+	name: string;
 }
 
 export interface BoundSelectProps extends BoundComponentProps {
@@ -23,21 +23,21 @@ export interface BoundSelectProps extends BoundComponentProps {
 }
 
 const BoundSelect = observer(
-	({ model, path, label, layout, options }: BoundSelectProps) => {
+	({ name, rules, model, prop, label, layout, options }: BoundSelectProps) => {
 		log.debug("BoundSelect.render");
 
 		const handleChange = (value) => {
-			deep.set(model, path, value);
+			model[prop] = value;
 		};
 
-		const value = deep.get(model, path);
+		const value = model[prop];
 
 		return (
-			<StyledFormItem label={label} {...layout}>
+			<StyledFormItem name={name} rules={rules} label={label} {...layout}>
 				<Select value={value} onChange={handleChange}>
 					{options.map((option) => (
 						<Option key={option.value} value={option.value}>
-							{option.label}
+							{option.name}
 						</Option>
 					))}
 				</Select>

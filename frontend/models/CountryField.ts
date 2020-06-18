@@ -13,30 +13,29 @@ import * as mobxUtils from "mobx-utils";
 
 import { LanguageIdType, RegionIdType } from "@phensley/cldr";
 import languagePackStore from "./LanguagePackStore";
+import Superfield from "./Superfield";
 
 export interface CountryInfo {
-	code: RegionIdType;
-	displayName: string;
+	value: RegionIdType;
+	name: string;
 }
 
-export interface Superfield {}
-
-export default class CountryField implements Superfield {
-	language: LanguageIdType;
+export default class CountryField extends Superfield {
 	countriesByLanguage: Map<LanguageIdType, CountryInfo[]>;
 	countryCodes: [];
 
 	constructor(language: LanguageIdType) {
-		log.debug("CountryField.constructor, language:", language);
-		this.language = language;
+		super(language);
 		this.countriesByLanguage = new Map();
 		this.countryCodes = countryList.getCodes();
 	}
 
 	get countries(): CountryInfo[] {
 		log.debug("CountryField.countries, language:", this.language);
-		if (this.countriesByLanguage.has(this.language)) {
-			return this.countriesByLanguage.get(this.language);
+		let countries: CountryInfo[] = this.countriesByLanguage.get(this.language);
+		if (countries) {
+			this.options = { choices: countries };
+			return countries;
 		}
 		const pack = languagePackStore.get(this.language);
 		log.debug(
@@ -49,29 +48,28 @@ export default class CountryField implements Superfield {
 			return [];
 		}
 		const generalCLDR = languagePackStore.get(this.language).cldr.General;
-		const countries: CountryInfo[] = this.countryCodes.map((code) => {
+		countries = this.countryCodes.map((code) => {
 			return {
-				code: code,
-				displayName: generalCLDR.getRegionDisplayName(code),
+				value: code,
+				name: generalCLDR.getRegionDisplayName(code),
 			};
 		});
+		countries.sort(this.compareFunction);
 		this.countriesByLanguage.set(this.language, countries);
+		this.options = { choices: countries };
 		return countries;
+	}
+
+	compareFunction(a: CountryInfo, b: CountryInfo): number {
+		return a.name.localeCompare(b.name);
 	}
 
 	get time(): number {
 		return mobxUtils.now();
 	}
-
-	onLanguageChange(language) {
-		log.debug("CountryField.onLanguageChange, language:", language);
-		this.language = language;
-	}
 }
 
 decorate(CountryField, {
-	language: observable,
 	countries: computed,
 	time: computed,
-	onLanguageChange: action.bound,
 });

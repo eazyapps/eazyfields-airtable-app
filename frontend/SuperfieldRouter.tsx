@@ -9,7 +9,10 @@ import viewModel, { SuperfieldType } from "./ViewModel";
 import Country from "./superfields/Country";
 
 const SuperfieldRouter = observer(() => {
-	log.debug("SuperfieldRouter.render");
+	log.debug(
+		"SuperfieldRouter.render, activeSuperfieldType",
+		viewModel.activeSuperfieldType
+	);
 
 	switch (viewModel.activeSuperfieldType) {
 		case SuperfieldType.country:

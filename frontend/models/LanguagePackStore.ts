@@ -23,8 +23,8 @@ export enum LoadingStatus {
 }
 
 export interface LanguageInfo {
-	code: LanguageIdType;
-	displayName: string;
+	value: LanguageIdType;
+	name: string;
 }
 
 // export interface LanguagePackStore {
@@ -113,8 +113,8 @@ export class LanguagePackStore {
 
 		this.supportedLanguages = SupportedLanguages.map((code) => {
 			return {
-				code: code,
-				displayName: generalCLDR.getLanguageDisplayName(code),
+				value: code,
+				name: generalCLDR.getLanguageDisplayName(code),
 			};
 		});
 	}

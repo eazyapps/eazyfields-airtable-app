@@ -28,10 +28,12 @@ export interface ResponsiveFormItemLayout {
 }
 
 export interface BoundComponentProps {
+	name?: string;
+	rules?: any;
 	model: object;
-	path: string[];
+	prop: string;
 	label: string;
-	layout: FormItemLayout | ResponsiveFormItemLayout;
+	layout?: FormItemLayout | ResponsiveFormItemLayout;
 	disabled?: boolean;
 	onChange?: Function;
 }
