@@ -29,7 +29,7 @@ const MainMenu = observer(() => {
 				Country
 			</StyledMenuItem>
 			<StyledMenuItem
-				key={SuperfieldType.dayOfWeek}
+				key={SuperfieldType.weekday}
 				icon={<InteractionOutlined />}
 			>
 				Day of week

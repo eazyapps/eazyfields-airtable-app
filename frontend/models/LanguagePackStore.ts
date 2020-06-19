@@ -12,7 +12,7 @@ import { fromPromise } from "mobx-utils";
 import { CLDRFramework, LanguageIdType, CLDR } from "@phensley/cldr";
 import bent from "bent";
 
-export const SupportedLanguages: LanguageIdType[] = ["en", "es"];
+export const SupportedLanguages: LanguageIdType[] = ["en", "es", "he"];
 
 const packurl = `https://cdn.jsdelivr.net/npm/@phensley/cldr@1.2.0/packs`;
 

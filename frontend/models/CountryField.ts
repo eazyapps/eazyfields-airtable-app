@@ -13,51 +13,35 @@ import * as mobxUtils from "mobx-utils";
 
 import { LanguageIdType, RegionIdType } from "@phensley/cldr";
 import languagePackStore from "./LanguagePackStore";
-import Superfield from "./Superfield";
+import Superfield, { Option } from "./Superfield";
 
-export interface CountryInfo {
+export interface CountryInfo extends Option {
 	value: RegionIdType;
 	name: string;
 }
 
 export default class CountryField extends Superfield {
-	countriesByLanguage: Map<LanguageIdType, CountryInfo[]>;
 	countryCodes: [];
 
 	constructor(language: LanguageIdType) {
 		super(language);
-		this.countriesByLanguage = new Map();
 		this.countryCodes = countryList.getCodes();
 	}
 
-	get countries(): CountryInfo[] {
-		log.debug("CountryField.countries, language:", this.language);
-		let countries: CountryInfo[] = this.countriesByLanguage.get(this.language);
-		if (countries) {
-			this.options = { choices: countries };
-			return countries;
-		}
+	get optionsForLanguage(): Option[] {
 		const pack = languagePackStore.get(this.language);
-		log.debug(
-			"CountryField.countries, pack.loadingStatus:",
-			pack.loadingStatus
-		);
-		log.debug("CountryField.countries, pack.isLoaded:", pack.isLoaded);
-
 		if (!pack.cldr) {
 			return [];
 		}
-		const generalCLDR = languagePackStore.get(this.language).cldr.General;
-		countries = this.countryCodes.map((code) => {
+		const generalCLDR = pack.cldr.General;
+		const options = this.countryCodes.map((code) => {
 			return {
 				value: code,
 				name: generalCLDR.getRegionDisplayName(code),
 			};
 		});
-		countries.sort(this.compareFunction);
-		this.countriesByLanguage.set(this.language, countries);
-		this.options = { choices: countries };
-		return countries;
+		options.sort(this.compareFunction);
+		return options;
 	}
 
 	compareFunction(a: CountryInfo, b: CountryInfo): number {
@@ -70,6 +54,6 @@ export default class CountryField extends Superfield {
 }
 
 decorate(CountryField, {
-	countries: computed,
+	optionsForLanguage: computed,
 	time: computed,
 });

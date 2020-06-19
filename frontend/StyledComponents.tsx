@@ -35,15 +35,33 @@ export const scrollbableStyle = css`
 	}
 `;
 
+export const StyledFormLayout = styled(Layout)`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	background-color: white;
+`;
+
+export const StyledFormContent = styled(Content)`
+	width: 100%;
+	max-width: 400px;
+	padding: 12px;
+	/* padding-top: 32px;
+	padding-bottom: 32px;
+	padding-left: 12px;
+	padding-right: 12px; */
+`;
+
 export const StyledSubmitButton = styled(Button)`
-	background-color: ${(props) => props.backgroundcolor};
+	margin-bottom: 8px;
+	/* background-color: ${(props) => props.backgroundcolor};
 	border-color: ${(props) => props.bordercolor};
-	color: ${(props) => props.textcolor};
+	color: ${(props) => props.textcolor}; */
 	${(props) => (props.justified ? "width: 100%;" : null)}
 
 	&&:hover {
-		background-color: ${(props) => props.backgroundcolor};
-		border-color: ${(props) => props.bordercolor};
+		/* background-color: ${(props) => props.backgroundcolor};
+		border-color: ${(props) => props.bordercolor}; */
 		opacity: 0.8;
 	}
 `;
@@ -204,9 +222,13 @@ export const StyledFormItemEditor = styled.div`
 
 // Decrease the big marging at the bottom of form items in settings forms
 export const StyledFormItem = styled(Form.Item)`
-	margin-bottom: 8px !important;
+	&& label:after {
+		display: inherit;
+	}
 
-	.ant-form-item-label {
+	/* margin-bottom: 8px !important; */
+
+	/* .ant-form-item-label {
 		text-align: left;
 	}
 
@@ -215,15 +237,11 @@ export const StyledFormItem = styled(Form.Item)`
 		justify-content: flex-end;
 	}
 
-	&& label:after {
-		display: inherit;
-	}
-
 	@media (max-width: ${Tablet.maxWidthPx}) {
 		.ant-col-xs-24 .ant-form-item-control-input-content {
 			justify-content: flex-start;
 		}
-	}
+	} */
 `;
 
 // export const StyledPanel = styled(Panel)`

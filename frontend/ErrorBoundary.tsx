@@ -124,8 +124,9 @@ export default class ErrorBoundary extends Component {
 					style={{
 						position: "fixed",
 						width: "100vw",
-						height: "calc(100vh - 60px)",
-						top: "34px",
+						height: "100vh",
+						top: 0,
+						left: 0,
 						zIndex: 100,
 						display: "flex",
 						flexDirection: "column",

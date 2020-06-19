@@ -28,11 +28,11 @@ const TableSelector = observer(({ field }: { field: Superfield }) => {
 
 	return (
 		<StyledFormItem
-			name="Table"
+			name="table"
 			label="Table to create the field in"
 			rules={[{ required: true, message: "Please select a table" }]}
 		>
-			<Select onSelect={onSelect} value={field.table ? field.table.id : null}>
+			<Select onSelect={onSelect}>
 				{base.tables.map((table) => (
 					<Option key={table.id} value={table.id}>
 						{table.name}

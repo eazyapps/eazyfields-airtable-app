@@ -20,10 +20,10 @@ import languagePackStore from "../models/LanguagePackStore";
 import Superfield from "../models/Superfield";
 import SuperfieldForm from "./SuperfieldForm";
 
-const CountryForm = observer(({ field }: { field: Superfield }) => {
+const WeekdayForm = observer(({ field }: { field: Superfield }) => {
 	log.debug("Country.render");
 
 	return <SuperfieldForm field={field} />;
 });
 
-export default CountryForm;
+export default WeekdayForm;

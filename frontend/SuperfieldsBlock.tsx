@@ -7,6 +7,8 @@ import {
 	StyledInnerLayout,
 	StyledSider,
 	StyledContent,
+	StyledFormContent,
+	StyledFormLayout,
 } from "./StyledComponents";
 import MainMenu from "./MainMenu";
 import SuperfieldRouter from "./SuperfieldRouter";
@@ -26,15 +28,14 @@ export default function SupefieldsBlock() {
 				}}
 			>
 				<BlockHeader />
-				<StyledInnerLayout>
-					<StyledSider theme="light" width="220px">
-						<MainMenu />
-					</StyledSider>
-					<StyledContent>
+				<StyledSider theme="light" width="220px">
+					<MainMenu />
+				</StyledSider>
+				<StyledFormLayout>
+					<StyledFormContent>
 						<SuperfieldRouter />
-					</StyledContent>
-				</StyledInnerLayout>
-
+					</StyledFormContent>
+				</StyledFormLayout>
 				<BlockFooter />
 			</Layout>
 		</ErrorBoundary>
