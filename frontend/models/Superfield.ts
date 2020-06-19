@@ -11,10 +11,19 @@ import { observable, action, computed, decorate, toJS } from "mobx";
 import { LanguageIdType } from "@phensley/cldr";
 import Table from "@airtable/blocks/dist/types/src/models/table";
 import { base, cursor } from "@airtable/blocks";
-import { FieldType } from "@airtable/blocks/models";
-import { fromPromise } from "mobx-utils";
+import { Field, FieldType } from "@airtable/blocks/models";
+import { fromPromise, IPromiseBasedObservable } from "mobx-utils";
 
 import languagePackStore from "./LanguagePackStore";
+
+// We use strings for enum values, for easier logging and debugging.
+// The value of calendar fields is used to get data from cldr,
+// so don't change it
+export enum SuperfieldType {
+	country = "country",
+	month = "months",
+	weekday = "weekdays",
+}
 
 export enum SubmitStatus {
 	// We use antd form validationStatus warning, since it has a more appropiate color
@@ -22,13 +31,12 @@ export enum SubmitStatus {
 	error = "error",
 }
 
-export interface Option {
-	value: string;
+export interface Choice {
 	name: string;
 }
 
-export interface Choice {
-	name: string;
+export interface Option extends Choice {
+	value: string;
 }
 
 export default abstract class Superfield {
@@ -39,7 +47,7 @@ export default abstract class Superfield {
 	optionsByLanguage: Map<LanguageIdType, Option[]>;
 	choices: Choice[] | null;
 	language: LanguageIdType;
-	creator: Promise<void> | null;
+	creator: IPromiseBasedObservable<Field> | null;
 	createError: Error | null;
 
 	constructor(language: LanguageIdType) {
@@ -57,16 +65,24 @@ export default abstract class Superfield {
 		cursor.watch(["activeTableId"], this.onActiveTableIdChange);
 	}
 
+	get formValues(): any {
+		log.debug("Superfield.formValues");
+
+		return {
+			table: this.table ? this.table.id : null,
+			name: this.name,
+			language: this.language,
+		};
+	}
+
 	get options(): Option[] {
-		log.debug("Superfield.options get, language:", this.language);
+		log.debug("Superfield.options, language:", this.language);
 		let options: Option[] = this.optionsByLanguage.get(this.language);
 		if (options) {
 			this.choices = options;
 			return options;
 		}
 		const pack = languagePackStore.get(this.language);
-		log.debug("Superfield.options, pack.loadingStatus:", pack.loadingStatus);
-		log.debug("Superfield.options, pack.isLoaded:", pack.isLoaded);
 
 		if (!pack.cldr) {
 			return [];
@@ -101,7 +117,7 @@ export default abstract class Superfield {
 		this._table = table;
 	}
 
-	create(values): Promise<void> {
+	create(values): IPromiseBasedObservable<Field> {
 		const name = toJS(this.name);
 		const type = toJS(this.type);
 		const choices = toJS(this.choices).map((choice) => {
@@ -122,10 +138,13 @@ export default abstract class Superfield {
 		this.creator = fromPromise(
 			this._table.unstable_createFieldAsync(name, type, options)
 		);
-		this.creator.catch((e) => {
-			log.error("Superfield.onCreateError, error:", e);
-			this.createError = e;
-		});
+		this.creator.then(
+			() => {},
+			(rejectReason: any) => {
+				log.error("Superfield.onCreateError, error:", rejectReason);
+				this.createError = rejectReason;
+			}
+		);
 		return this.creator;
 	}
 
@@ -186,4 +205,5 @@ decorate(Superfield, {
 	submitStatusMessage: computed,
 	onValuesChange: action,
 	onActiveTableIdChange: action.bound,
+	formValues: computed,
 });

@@ -2,15 +2,11 @@ import log from "loglevel";
 
 import { observable, decorate, action, computed } from "mobx";
 
-import Superfield from "./models/Superfield";
+import Superfield, { SuperfieldType } from "./models/Superfield";
 import CountryField from "./models/CountryField";
-import WeekdayField from "./models/WeekdayField";
+import CalendarField from "./models/WeekdayField";
 
-// We use strings for enum values, for easier logging and debugging.
-export enum SuperfieldType {
-	country = "country",
-	weekday = "weekday",
-}
+export { SuperfieldType } from "./models/Superfield";
 
 export class BlockViewModel {
 	// showSettings: boolean;
@@ -24,12 +20,12 @@ export class BlockViewModel {
 		this.activeSuperfieldType = SuperfieldType.country;
 	}
 
-	getField(type: SuperfieldType): Superfield {
-		if (this._fields.has(type)) {
-			return this._fields.get(type);
+	get activeField(): Superfield {
+		if (this._fields.has(this.activeSuperfieldType)) {
+			return this._fields.get(this.activeSuperfieldType);
 		}
-		const field = this.createField(type);
-		this._fields.set(type, field);
+		const field = this.createField(this.activeSuperfieldType);
+		this._fields.set(this.activeSuperfieldType, field);
 		return field;
 	}
 
@@ -37,8 +33,10 @@ export class BlockViewModel {
 		switch (type) {
 			case SuperfieldType.country:
 				return new CountryField("en");
+			case SuperfieldType.month:
+				return new CalendarField("en", SuperfieldType.month);
 			case SuperfieldType.weekday:
-				return new WeekdayField("en");
+				return new CalendarField("en", SuperfieldType.weekday);
 			default:
 				throw new Error(
 					`BlockViewModel: No view model class exists for ${type}`
@@ -58,6 +56,7 @@ export class BlockViewModel {
 decorate(BlockViewModel, {
 	// showSettings: observable,
 	activeSuperfieldType: observable,
+	activeField: computed,
 });
 
 const viewModel = new BlockViewModel();

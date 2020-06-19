@@ -2,7 +2,7 @@ import loglevel from "loglevel";
 const log = loglevel.getLogger("SuperfieldForm");
 log.setLevel("debug");
 
-import React from "react";
+import React, { useState } from "react";
 
 import { observer } from "mobx-react-lite";
 
@@ -11,8 +11,6 @@ const { Option } = Select;
 
 import { StyledFormItem, StyledSubmitButton } from "../StyledComponents";
 
-import viewModel, { SuperfieldType } from "../ViewModel";
-import SuperfieldFormField from "../models/SuperfieldFormField";
 import BoundSelect from "../components/BoundSelect";
 import TableSelector from "../components/TableSelector";
 import BoundInput from "../components/BoundInput";
@@ -20,24 +18,35 @@ import languagePackStore from "../models/LanguagePackStore";
 import Superfield from "../models/Superfield";
 
 const SuperfieldForm = observer(
-	({ field, children }: { field: Superfield; children?: any }) => {
+	({
+		field,
+		formValues,
+		children,
+	}: {
+		field: Superfield;
+		formValues: any;
+		children?: any;
+	}) => {
 		log.debug("SuperfieldForm.render");
 
 		const [form] = Form.useForm();
 
-		const tableId = field.table ? field.table.id : null;
+		const [error, setError] = useState(null);
 
-		log.debug("SuperfieldForm, tableId:", tableId);
+		if (error) {
+			throw error;
+		}
 
-		form.setFieldsValue({
-			table: tableId,
-			name: field.name,
-			language: field.language,
-		});
+		form.setFieldsValue(formValues);
 
 		const onFinish = (values) => {
-			log.debug("SuperfieldForm.onFinish, values:", values);
-			field.create(values);
+			try {
+				log.debug("SuperfieldForm.onFinish, values:", values);
+				field.create(values);
+			} catch (e) {
+				log.error("SuperfieldForm.onFinish, error:", e);
+				setError(e);
+			}
 		};
 
 		const onFinishFailed = (errorInfo) => {

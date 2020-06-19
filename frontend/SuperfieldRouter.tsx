@@ -10,8 +10,8 @@ import viewModel, { SuperfieldType } from "./ViewModel";
 import CountryForm from "./superfields/Country";
 import Loading from "./LoadingEnglish";
 import Superfield from "./models/Superfield";
-import WeekdayField from "./models/WeekdayField";
-import WeekdayForm from "./superfields/WeekdayForm";
+import CalendarFieldForm from "./superfields/WeekdayForm";
+import CalendarField from "./models/WeekdayField";
 
 const SuperfieldRouter = observer(() => {
 	log.debug(
@@ -23,13 +23,15 @@ const SuperfieldRouter = observer(() => {
 		return <Loading />;
 	}
 
-	const field: Superfield = viewModel.getField(viewModel.activeSuperfieldType);
+	const field: Superfield = viewModel.activeField;
 
 	switch (viewModel.activeSuperfieldType) {
 		case SuperfieldType.country:
 			return <CountryForm field={field} />;
+		case SuperfieldType.month:
+			return <CalendarFieldForm field={field as CalendarField} />;
 		case SuperfieldType.weekday:
-			return <WeekdayForm field={field} />;
+			return <CalendarFieldForm field={field as CalendarField} />;
 		default:
 			throw new Error(
 				`SuperfieldRouter: No superfield editor found for ${viewModel.activeSuperfieldType}`

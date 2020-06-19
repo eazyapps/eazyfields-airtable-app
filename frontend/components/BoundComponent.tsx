@@ -33,6 +33,8 @@ export interface BoundComponentProps {
 	model: object;
 	prop: string;
 	label: string;
+	placeholder?: string;
+	defaultValue?: number | string;
 	layout?: FormItemLayout | ResponsiveFormItemLayout;
 	disabled?: boolean;
 	onChange?: Function;

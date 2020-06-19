@@ -11,19 +11,29 @@ const { Option } = Select;
 
 import { StyledFormItem, StyledSubmitButton } from "../StyledComponents";
 
-import viewModel, { SuperfieldType } from "../ViewModel";
-import CountryField from "../models/CountryField";
 import BoundSelect from "../components/BoundSelect";
-import TableSelector from "../components/TableSelector";
-import BoundInput from "../components/BoundInput";
-import languagePackStore from "../models/LanguagePackStore";
-import Superfield from "../models/Superfield";
 import SuperfieldForm from "./SuperfieldForm";
+import CalendarField from "../models/WeekdayField";
 
-const WeekdayForm = observer(({ field }: { field: Superfield }) => {
-	log.debug("Country.render");
+const CalendarFieldForm = observer(({ field }: { field: CalendarField }) => {
+	log.debug("CalendarFieldForm.render");
 
-	return <SuperfieldForm field={field} />;
+	const widthOptions = field.widthOptions;
+
+	return (
+		<SuperfieldForm field={field} formValues={field.calendarFieldFormValues}>
+			<BoundSelect
+				name="width"
+				rules={[{ required: true, message: "Please select a format" }]}
+				label="Format of field values"
+				model={field}
+				prop="width"
+				options={widthOptions}
+				defaultValue={widthOptions.length ? widthOptions[0].value : null}
+				placeholder="Loading options in selected language"
+			/>
+		</SuperfieldForm>
+	);
 });
 
-export default WeekdayForm;
+export default CalendarFieldForm;

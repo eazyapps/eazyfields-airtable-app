@@ -1,5 +1,6 @@
-import log from "loglevel";
-log.setLevel("info");
+import loglevel from "loglevel";
+const log = loglevel.getLogger("ErrorBoundary");
+log.setLevel("debug");
 
 import React, { Component } from "react";
 
@@ -37,7 +38,13 @@ const ErrorMessage = () => {
 	);
 };
 
-const ErrorDescription = ({ error }) => {
+const ErrorDescription = ({
+	message,
+	error,
+}: {
+	message: string | null;
+	error: Error | null;
+}) => {
 	return (
 		<div
 			style={{
@@ -64,9 +71,16 @@ const ErrorDescription = ({ error }) => {
 					header="Details"
 					style={{ backgroundColor: "transparent", border: "none" }}
 				>
-					<Paragraph>Error name: {error.name}</Paragraph>
-					<Paragraph>Error message: {error.message}</Paragraph>
-					{error.stack ? (
+					{message ? (
+						<Paragraph>window.onerror message: {message}</Paragraph>
+					) : null}
+					{error && error.name ? (
+						<Paragraph>Error name: {error.name}</Paragraph>
+					) : null}
+					{error && error.message ? (
+						<Paragraph>Error message: {error.message}</Paragraph>
+					) : null}
+					{error && error.stack ? (
 						<>
 							<Paragraph>Error stack:</Paragraph>
 							<Paragraph>{error.stack.toString()}</Paragraph>
@@ -85,13 +99,42 @@ const ErrorDescription = ({ error }) => {
 	);
 };
 
+interface ErrorBoundaryState {
+	hasError: boolean;
+	message: string | null;
+	error: Error | null;
+}
+
 export default class ErrorBoundary extends Component {
+	state: ErrorBoundaryState;
+
 	constructor(props) {
+		log.debug("ErrorBoundary.constructor");
 		super(props);
-		this.state = { hasError: false, error: null };
+		this.state = {
+			hasError: false,
+			message: null,
+			error: null,
+		};
+		window.addEventListener("error", this.onWindowError.bind(this));
+	}
+
+	onWindowError(message, source, lineno, colno, error) {
+		log.error(
+			"ErrorBoundary.onWindowError, message:",
+			message,
+			", error:",
+			error
+		);
+		this.state = {
+			hasError: true,
+			message: message,
+			error: error,
+		};
 	}
 
 	static getDerivedStateFromError(error: Error) {
+		log.error("ErrorBoundary.getDerivedStateFromError, error:", error);
 		// Update state so the next render will show the fallback UI.
 		return { hasError: true, error: error };
 	}
@@ -111,11 +154,16 @@ export default class ErrorBoundary extends Component {
 	}
 
 	render() {
+		log.debug("ErrorBoundary.render");
 		if (this.state.hasError) {
 			// Error path
 			const error: Error = this.state.error;
-			const description = <ErrorDescription error={error} />;
-			log.error("ErrorBoundary.render, error:", error);
+			const description = (
+				<ErrorDescription
+					message={this.state.message}
+					error={this.state.error}
+				/>
+			);
 			return (
 				<Alert
 					type="error"

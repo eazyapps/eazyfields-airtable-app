@@ -23,7 +23,17 @@ export interface BoundSelectProps extends BoundComponentProps {
 }
 
 const BoundSelect = observer(
-	({ name, rules, model, prop, label, layout, options }: BoundSelectProps) => {
+	({
+		name,
+		rules,
+		model,
+		prop,
+		label,
+		layout,
+		options,
+		placeholder,
+		defaultValue,
+	}: BoundSelectProps) => {
 		log.debug("BoundSelect.render");
 
 		const handleChange = (value) => {
@@ -32,9 +42,22 @@ const BoundSelect = observer(
 
 		const value = model[prop];
 
+		const additionalProps: {
+			placeholder?: string;
+		} = {};
+		if (placeholder && options.length == 0) {
+			additionalProps.placeholder = placeholder;
+		}
+
 		return (
-			<StyledFormItem name={name} rules={rules} label={label} {...layout}>
-				<Select value={value} onChange={handleChange}>
+			<StyledFormItem
+				name={name}
+				rules={rules}
+				label={label}
+				{...layout}
+				{...additionalProps}
+			>
+				<Select defaultValue={defaultValue} onChange={handleChange}>
 					{options.map((option) => (
 						<Option key={option.value} value={option.value}>
 							{option.name}

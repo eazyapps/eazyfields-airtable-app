@@ -23,7 +23,7 @@ import SuperfieldForm from "./SuperfieldForm";
 const CountryForm = observer(({ field }: { field: Superfield }) => {
 	log.debug("Country.render");
 
-	return <SuperfieldForm field={field} />;
+	return <SuperfieldForm field={field} formValues={field.formValues} />;
 });
 
 export default CountryForm;

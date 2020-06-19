@@ -28,6 +28,9 @@ const MainMenu = observer(() => {
 			<StyledMenuItem key={SuperfieldType.country} icon={<DragOutlined />}>
 				Country
 			</StyledMenuItem>
+			<StyledMenuItem key={SuperfieldType.month} icon={<InteractionOutlined />}>
+				Month
+			</StyledMenuItem>
 			<StyledMenuItem
 				key={SuperfieldType.weekday}
 				icon={<InteractionOutlined />}
