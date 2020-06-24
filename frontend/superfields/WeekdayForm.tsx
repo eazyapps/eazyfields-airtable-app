@@ -1,15 +1,10 @@
 import loglevel from "loglevel";
-const log = loglevel.getLogger("Country");
+const log = loglevel.getLogger("CalendarFieldForm");
 log.setLevel("debug");
 
 import React from "react";
 
 import { observer } from "mobx-react-lite";
-
-import { Form, Select } from "antd";
-const { Option } = Select;
-
-import { StyledFormItem, StyledSubmitButton } from "../StyledComponents";
 
 import BoundSelect from "../components/BoundSelect";
 import SuperfieldForm from "./SuperfieldForm";

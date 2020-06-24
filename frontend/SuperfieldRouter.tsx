@@ -12,6 +12,8 @@ import Loading from "./LoadingEnglish";
 import Superfield from "./models/Superfield";
 import CalendarFieldForm from "./superfields/WeekdayForm";
 import CalendarField from "./models/WeekdayField";
+import YearFieldForm from "./superfields/YearFieldForm";
+import YearField from "./models/YearField";
 
 const SuperfieldRouter = observer(() => {
 	log.debug(
@@ -28,6 +30,8 @@ const SuperfieldRouter = observer(() => {
 	switch (viewModel.activeSuperfieldType) {
 		case SuperfieldType.country:
 			return <CountryForm field={field} />;
+		case SuperfieldType.year:
+			return <YearFieldForm field={field as YearField} />;
 		case SuperfieldType.month:
 			return <CalendarFieldForm field={field as CalendarField} />;
 		case SuperfieldType.weekday:

@@ -68,7 +68,6 @@ export default class CalendarField extends Superfield {
 		for (const key in names) {
 			options.push({ value: key, name: names[key] });
 		}
-		this.choices = options;
 		return options;
 	}
 

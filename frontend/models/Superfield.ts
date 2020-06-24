@@ -17,10 +17,11 @@ import { fromPromise, IPromiseBasedObservable } from "mobx-utils";
 import languagePackStore from "./LanguagePackStore";
 
 // We use strings for enum values, for easier logging and debugging.
-// The value of calendar fields is used to get data from cldr,
+// The value of calendar fields (month and weekday) is used to get data from cldr,
 // so don't change it
 export enum SuperfieldType {
 	country = "country",
+	year = "year",
 	month = "months",
 	weekday = "weekdays",
 }
@@ -45,7 +46,6 @@ export default abstract class Superfield {
 	name: string;
 	type: FieldType;
 	optionsByLanguage: Map<LanguageIdType, Option[]>;
-	choices: Choice[] | null;
 	language: LanguageIdType;
 	creator: IPromiseBasedObservable<Field> | null;
 	createError: Error | null;
@@ -57,7 +57,6 @@ export default abstract class Superfield {
 		this.name = null;
 		this.type = FieldType.SINGLE_SELECT;
 		this.optionsByLanguage = new Map();
-		this.choices = null;
 		this.language = language;
 		this.creator = null;
 		this.createError = null;
@@ -79,7 +78,6 @@ export default abstract class Superfield {
 		log.debug("Superfield.options, language:", this.language);
 		let options: Option[] = this.optionsByLanguage.get(this.language);
 		if (options) {
-			this.choices = options;
 			return options;
 		}
 		const pack = languagePackStore.get(this.language);
@@ -89,7 +87,6 @@ export default abstract class Superfield {
 		}
 		options = this.optionsForLanguage;
 		this.optionsByLanguage.set(this.language, options);
-		this.choices = options;
 		return options;
 	}
 
@@ -120,7 +117,7 @@ export default abstract class Superfield {
 	create(values): IPromiseBasedObservable<Field> {
 		const name = toJS(this.name);
 		const type = toJS(this.type);
-		const choices = toJS(this.choices).map((choice) => {
+		const choices = this.options.map((choice) => {
 			return { name: choice.name };
 		});
 		const options = { choices: choices };
@@ -130,9 +127,7 @@ export default abstract class Superfield {
 			", type:",
 			type,
 			", options: ",
-			options,
-			", choices: ",
-			choices
+			options
 		);
 		this._table = this.table;
 		this.creator = fromPromise(
@@ -195,7 +190,6 @@ decorate(Superfield, {
 	activeTableId: observable,
 	name: observable,
 	type: observable,
-	choices: observable,
 	options: computed,
 	language: observable,
 	isCreating: computed,

@@ -5,6 +5,7 @@ import { observable, decorate, action, computed } from "mobx";
 import Superfield, { SuperfieldType } from "./models/Superfield";
 import CountryField from "./models/CountryField";
 import CalendarField from "./models/WeekdayField";
+import YearField from "./models/YearField";
 
 export { SuperfieldType } from "./models/Superfield";
 
@@ -33,6 +34,8 @@ export class BlockViewModel {
 		switch (type) {
 			case SuperfieldType.country:
 				return new CountryField("en");
+			case SuperfieldType.year:
+				return new YearField("en");
 			case SuperfieldType.month:
 				return new CalendarField("en", SuperfieldType.month);
 			case SuperfieldType.weekday:

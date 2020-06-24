@@ -21,10 +21,14 @@ const SuperfieldForm = observer(
 	({
 		field,
 		formValues,
+		previewValue,
+		previewPlaceholder,
 		children,
 	}: {
 		field: Superfield;
 		formValues: any;
+		previewValue?: string | number;
+		previewPlaceholder?: string;
 		children?: any;
 	}) => {
 		log.debug("SuperfieldForm.render");
@@ -110,7 +114,7 @@ const SuperfieldForm = observer(
 				{children}
 				<StyledFormItem label="Preview of field values">
 					{field.options.length > 0 ? (
-						<Select defaultValue={field.options[0].value}>
+						<Select defaultValue={field.options[0].value} value={previewValue}>
 							{field.options.map((option) => (
 								<Option key={option.value} value={option.value}>
 									{option.name}
@@ -118,7 +122,13 @@ const SuperfieldForm = observer(
 							))}
 						</Select>
 					) : (
-						<Select placeholder="Loading values in selected language" />
+						<Select
+							placeholder={
+								previewPlaceholder != null
+									? previewPlaceholder
+									: "Loading values in selected language"
+							}
+						/>
 					)}
 				</StyledFormItem>
 				<StyledFormItem
@@ -131,6 +141,7 @@ const SuperfieldForm = observer(
 						htmlType="submit"
 						loading={field.isCreating}
 						justified="true"
+						disabled={field.options.length == 0 ? true : undefined}
 					>
 						Create field
 					</StyledSubmitButton>
