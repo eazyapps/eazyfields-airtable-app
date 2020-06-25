@@ -52,6 +52,7 @@ const YearFieldForm = observer(({ field }: { field: YearField }) => {
 				typeof field.firstYear == "number" ? field.firstYear : undefined
 			}
 			previewPlaceholder="No valid year range"
+			hideLanguageSelection={true}
 		>
 			<BoundInputNumber
 				name="firstYear"

@@ -1,3 +1,5 @@
+import { Moment } from "moment";
+
 export interface ColLayout {
 	span: number;
 	offset?: number;
@@ -38,4 +40,7 @@ export interface BoundComponentProps {
 	layout?: FormItemLayout | ResponsiveFormItemLayout;
 	disabled?: boolean;
 	onChange?: Function;
+	value?: number | string | Moment;
+	validateStatus?: "error";
+	help?: string;
 }

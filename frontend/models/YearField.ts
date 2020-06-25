@@ -3,17 +3,10 @@ const log = loglevel.getLogger("YearField");
 log.setLevel("debug");
 log.debug("YearField");
 
-import chai from "chai";
-const { expect } = chai;
+import { observable, computed, decorate } from "mobx";
 
-import { observable, computed, decorate, action } from "mobx";
-
-import { LanguageIdType, FieldWidthType } from "@phensley/cldr";
-import languagePackStore from "./LanguagePackStore";
-import Superfield, { SuperfieldType, Option } from "./Superfield";
-import { isValidElement } from "react";
-
-const widths: FieldWidthType[] = ["wide", "abbreviated", "short", "narrow"];
+import { LanguageIdType } from "@phensley/cldr";
+import Superfield, { Option } from "./Superfield";
 
 export default class YearField extends Superfield {
 	firstYear: number;

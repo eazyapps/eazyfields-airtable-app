@@ -24,6 +24,7 @@ export enum SuperfieldType {
 	year = "year",
 	month = "months",
 	weekday = "weekdays",
+	time = "time",
 }
 
 export enum SubmitStatus {

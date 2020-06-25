@@ -40,6 +40,9 @@ const MainMenu = observer(() => {
 			>
 				Day of week
 			</StyledMenuItem>
+			<StyledMenuItem key={SuperfieldType.time} icon={<InteractionOutlined />}>
+				Time
+			</StyledMenuItem>
 		</Menu>
 	);
 });

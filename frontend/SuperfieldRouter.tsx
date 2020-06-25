@@ -14,6 +14,8 @@ import CalendarFieldForm from "./superfields/WeekdayForm";
 import CalendarField from "./models/WeekdayField";
 import YearFieldForm from "./superfields/YearFieldForm";
 import YearField from "./models/YearField";
+import TimeFieldForm from "./superfields/TimeSlotsFieldForm";
+import TimeField from "./models/TimeSlotsField";
 
 const SuperfieldRouter = observer(() => {
 	log.debug(
@@ -36,6 +38,8 @@ const SuperfieldRouter = observer(() => {
 			return <CalendarFieldForm field={field as CalendarField} />;
 		case SuperfieldType.weekday:
 			return <CalendarFieldForm field={field as CalendarField} />;
+		case SuperfieldType.time:
+			return <TimeFieldForm field={field as TimeField} />;
 		default:
 			throw new Error(
 				`SuperfieldRouter: No superfield editor found for ${viewModel.activeSuperfieldType}`

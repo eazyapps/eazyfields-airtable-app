@@ -24,12 +24,14 @@ const SuperfieldForm = observer(
 		previewValue,
 		previewPlaceholder,
 		children,
+		hideLanguageSelection,
 	}: {
 		field: Superfield;
 		formValues: any;
 		previewValue?: string | number;
 		previewPlaceholder?: string;
 		children?: any;
+		hideLanguageSelection?: boolean;
 	}) => {
 		log.debug("SuperfieldForm.render");
 
@@ -82,10 +84,6 @@ const SuperfieldForm = observer(
 				onFinish={onFinish}
 				onFinishFailed={onFinishFailed}
 			>
-				{/* <StyledFormItem
-				label="Table to create the field in"
-				rules={[{ required: true, message: "Please select a table" }]}
-			> */}
 				<TableSelector field={field} />
 				<BoundInput
 					name="name"
@@ -102,15 +100,16 @@ const SuperfieldForm = observer(
 					model={field}
 					prop="name"
 				/>
-				{/* </StyledFormItem> */}
-				<BoundSelect
-					name="language"
-					rules={[{ required: true, message: "Please select a language" }]}
-					label="Language for field values"
-					model={field}
-					prop="language"
-					options={languagePackStore.supportedLanguages}
-				/>
+				{hideLanguageSelection !== true ? (
+					<BoundSelect
+						name="language"
+						rules={[{ required: true, message: "Please select a language" }]}
+						label="Language for field values"
+						model={field}
+						prop="language"
+						options={languagePackStore.supportedLanguages}
+					/>
+				) : null}
 				{children}
 				<StyledFormItem label="Preview of field values">
 					{field.options.length > 0 ? (

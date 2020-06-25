@@ -6,6 +6,7 @@ import Superfield, { SuperfieldType } from "./models/Superfield";
 import CountryField from "./models/CountryField";
 import CalendarField from "./models/WeekdayField";
 import YearField from "./models/YearField";
+import TimeField from "./models/TimeSlotsField";
 
 export { SuperfieldType } from "./models/Superfield";
 
@@ -40,6 +41,8 @@ export class BlockViewModel {
 				return new CalendarField("en", SuperfieldType.month);
 			case SuperfieldType.weekday:
 				return new CalendarField("en", SuperfieldType.weekday);
+			case SuperfieldType.time:
+				return new TimeField("en");
 			default:
 				throw new Error(
 					`BlockViewModel: No view model class exists for ${type}`
