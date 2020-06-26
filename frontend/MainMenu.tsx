@@ -8,7 +8,7 @@ import { StyledMenuItem } from "./StyledComponents";
 
 import { observer } from "mobx-react-lite";
 
-import viewModel, { SuperfieldType } from "./ViewModel";
+import viewModel, { SuperfieldType } from "./BlockViewModel";
 import { Menu } from "antd";
 
 const MainMenu = observer(() => {

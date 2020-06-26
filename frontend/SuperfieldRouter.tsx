@@ -6,16 +6,16 @@ import React from "react";
 import { observer } from "mobx-react-lite";
 
 import languagePackStore from "./models/LanguagePackStore";
-import viewModel, { SuperfieldType } from "./ViewModel";
-import CountryForm from "./superfields/Country";
-import Loading from "./LoadingEnglish";
+import viewModel, { SuperfieldType } from "./BlockViewModel";
+import CountryForm from "./superfields/CountryForm";
+import Loading from "./Loading";
 import Superfield from "./models/Superfield";
-import CalendarFieldForm from "./superfields/WeekdayForm";
-import CalendarField from "./models/WeekdayField";
+import CalendarFieldForm from "./superfields/CalendarFieldForm";
+import CalendarField from "./models/CalendarField";
 import YearFieldForm from "./superfields/YearFieldForm";
 import YearField from "./models/YearField";
-import TimeFieldForm from "./superfields/TimeSlotsFieldForm";
-import TimeField from "./models/TimeSlotsField";
+import TimeFieldForm from "./superfields/TimeFieldForm";
+import TimeField from "./models/TimeField";
 
 const SuperfieldRouter = observer(() => {
 	log.debug(

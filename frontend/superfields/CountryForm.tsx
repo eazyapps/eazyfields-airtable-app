@@ -11,7 +11,7 @@ const { Option } = Select;
 
 import { StyledFormItem, StyledSubmitButton } from "../StyledComponents";
 
-import viewModel, { SuperfieldType } from "../ViewModel";
+import viewModel, { SuperfieldType } from "../BlockViewModel";
 import CountryField from "../models/CountryField";
 import BoundSelect from "../components/BoundSelect";
 import TableSelector from "../components/TableSelector";

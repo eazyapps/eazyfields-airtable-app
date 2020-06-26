@@ -8,7 +8,7 @@ import { observer } from "mobx-react-lite";
 
 import BoundSelect from "../components/BoundSelect";
 import SuperfieldForm from "./SuperfieldForm";
-import CalendarField from "../models/WeekdayField";
+import CalendarField from "../models/CalendarField";
 
 const CalendarFieldForm = observer(({ field }: { field: CalendarField }) => {
 	log.debug("CalendarFieldForm.render");

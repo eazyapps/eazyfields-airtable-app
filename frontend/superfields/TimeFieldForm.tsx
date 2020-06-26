@@ -10,7 +10,7 @@ import { observer } from "mobx-react-lite";
 
 import BoundTimePicker from "../components/BoundTimePicker";
 import SuperfieldForm from "./SuperfieldForm";
-import TimeField from "../models/TimeSlotsField";
+import TimeField from "../models/TimeField";
 import BoundInputNumber from "../components/BoundInputNumber";
 
 const TimeFieldForm = observer(({ field }: { field: TimeField }) => {

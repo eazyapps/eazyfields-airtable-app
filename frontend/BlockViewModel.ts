@@ -4,9 +4,9 @@ import { observable, decorate, action, computed } from "mobx";
 
 import Superfield, { SuperfieldType } from "./models/Superfield";
 import CountryField from "./models/CountryField";
-import CalendarField from "./models/WeekdayField";
+import CalendarField from "./models/CalendarField";
 import YearField from "./models/YearField";
-import TimeField from "./models/TimeSlotsField";
+import TimeField from "./models/TimeField";
 
 export { SuperfieldType } from "./models/Superfield";
 
