@@ -18,10 +18,10 @@ export default class CalendarField extends Superfield {
 	width: FieldWidthType;
 	superfieldType: SuperfieldType;
 
-	constructor(language: LanguageIdType, SuperfieldType: SuperfieldType) {
-		super(language);
+	constructor(language: LanguageIdType, superfieldType: SuperfieldType) {
+		super(language, superfieldType == SuperfieldType.month ? "Month" : "Day");
 		this.width = "wide";
-		this.superfieldType = SuperfieldType;
+		this.superfieldType = superfieldType;
 	}
 
 	get calendarFieldFormValues(): any {

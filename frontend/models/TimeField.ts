@@ -18,7 +18,7 @@ export default class TimeField extends Superfield {
 	gap: number;
 
 	constructor(language: LanguageIdType) {
-		super(language);
+		super(language, "Time");
 		this.startTime = moment.utc("08:00", "HH:mm");
 		this.endTime = moment.utc("17:00", "HH:mm");
 		this.gap = 30;

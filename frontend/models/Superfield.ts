@@ -51,11 +51,11 @@ export default abstract class Superfield {
 	creator: IPromiseBasedObservable<Field> | null;
 	createError: Error | null;
 
-	constructor(language: LanguageIdType) {
+	constructor(language: LanguageIdType, defaultName: string) {
 		log.debug("CountryField.constructor, language:", language);
 		this._table = null;
 		this.activeTableId = cursor.activeTableId;
-		this.name = null;
+		this.name = defaultName;
 		this.type = FieldType.SINGLE_SELECT;
 		this.optionsByLanguage = new Map();
 		this.language = language;

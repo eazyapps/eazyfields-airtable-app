@@ -24,7 +24,7 @@ export default class CountryField extends Superfield {
 	countryCodes: [];
 
 	constructor(language: LanguageIdType) {
-		super(language);
+		super(language, "Country");
 		this.countryCodes = countryList.getCodes();
 	}
 

@@ -13,7 +13,7 @@ export default class YearField extends Superfield {
 	lastYear: number;
 
 	constructor(language: LanguageIdType) {
-		super(language);
+		super(language, "Year");
 		this.firstYear = 1920;
 		this.lastYear = 2030;
 	}

@@ -1,12 +1,12 @@
 # Superfields
 
-Create Airtable fields with pre-populated values for:
+Create Airtable fields with pre-populated options for:
 
-- Country, month or weekday, with support for choosing the language for field values
+- Country, month or weekday, with support for choosing the language for options
 
-- Year - specifying the selection range
+- Year - specifying the options range
 
-- Time - specifying the selection range and gap between selections
+- Time - specifying the options range and gap between options
 
 ## Implementation Details
 
