@@ -20,6 +20,8 @@ export interface OptionProps {
 
 export interface BoundSelectProps extends BoundComponentProps {
 	options: OptionProps[];
+	showSearch?: boolean;
+	filterOption?: boolean | Function;
 }
 
 const BoundSelect = observer(
@@ -33,6 +35,8 @@ const BoundSelect = observer(
 		options,
 		placeholder,
 		defaultValue,
+		showSearch = false,
+		filterOption = true,
 	}: BoundSelectProps) => {
 		log.debug("BoundSelect.render");
 
@@ -57,9 +61,14 @@ const BoundSelect = observer(
 				{...layout}
 				{...additionalProps}
 			>
-				<Select defaultValue={defaultValue} onChange={handleChange}>
+				<Select
+					defaultValue={defaultValue}
+					onChange={handleChange}
+					showSearch={showSearch}
+					filterOption={filterOption}
+				>
 					{options.map((option) => (
-						<Option key={option.value} value={option.value}>
+						<Option key={option.value} value={option.value} name={option.name}>
 							{option.name}
 						</Option>
 					))}

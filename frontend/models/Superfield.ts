@@ -10,7 +10,7 @@ import { observable, action, computed, decorate, toJS } from "mobx";
 
 import { LanguageIdType } from "@phensley/cldr";
 import Table from "@airtable/blocks/dist/types/src/models/table";
-import { base, cursor } from "@airtable/blocks";
+import { base, cursor, globalConfig } from "@airtable/blocks";
 import { Field, FieldType } from "@airtable/blocks/models";
 import { fromPromise, IPromiseBasedObservable } from "mobx-utils";
 

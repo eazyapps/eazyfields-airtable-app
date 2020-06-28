@@ -5,14 +5,13 @@ import React from "react";
 
 import styled from "styled-components";
 
-import { Layout } from "antd";
+import { Layout, Typography } from "antd";
 const { Header } = Layout;
 
-import { StyledLink } from "./StyledComponents";
+import { StyledLogoWrapper, StyledLogoText } from "./StyledComponents";
 
 const StyledLogo = styled.img`
-	max-height: 20px;
-	vertical-align: middle;
+	max-height: 16px;
 `;
 
 const BlockHeader = () => {
@@ -35,9 +34,10 @@ const BlockHeader = () => {
 				paddingRight: "12px",
 			}}
 		>
-			<StyledLink href="https://superblocks.at" target="_blank">
-				<StyledLogo src="https://superblocks.at/superblocks-domain-logo-2/" />
-			</StyledLink>
+			<StyledLogoWrapper href="https://superblocks.at" target="_blank">
+				<StyledLogo src="https://superblocks.at/superblocks-logo-180x180/" />
+				<StyledLogoText strong={true}>Superfields</StyledLogoText>
+			</StyledLogoWrapper>
 		</Header>
 	);
 };

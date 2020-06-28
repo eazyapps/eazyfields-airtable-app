@@ -3,6 +3,8 @@ log.setLevel("debug");
 
 import React from "react";
 
+import { Typography } from "antd";
+const { Text } = Typography;
 import { DragOutlined, InteractionOutlined } from "@ant-design/icons";
 import { StyledMenuItem } from "./StyledComponents";
 
@@ -20,6 +22,20 @@ const MainMenu = observer(() => {
 	};
 
 	return (
+		// <>
+		// 	<div
+		// 		style={{
+		// 			height: "32px",
+		// 			width: "100%",
+		// 			boxShadow: "0px 2px 0px 0px rgba(0, 0, 0, 0.1)",
+		// 			marginBottom: "2px",
+		// 			display: "flex",
+		// 			alignItems: "center",
+		// 			paddingLeft: "8px",
+		// 		}}
+		// 	>
+		// 		<Text>Type of field to create:</Text>
+		// 	</div>
 		<Menu
 			mode="inline"
 			selectedKeys={[viewModel.activeSuperfieldType]}
@@ -44,6 +60,7 @@ const MainMenu = observer(() => {
 				Time
 			</StyledMenuItem>
 		</Menu>
+		// </>
 	);
 });
 

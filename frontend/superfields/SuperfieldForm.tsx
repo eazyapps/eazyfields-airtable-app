@@ -76,6 +76,14 @@ const SuperfieldForm = observer(
 			return Promise.resolve();
 		};
 
+		const filterLanguageOption = (
+			inputValue: string,
+			option: { name: string }
+		) => {
+			// log.debug("SuperfieldForm.filterLanguageOption, option:", option);
+			return option.name.toLowerCase().startsWith(inputValue.toLowerCase());
+		};
+
 		return (
 			<Form
 				form={form}
@@ -107,13 +115,15 @@ const SuperfieldForm = observer(
 						label="Language for field values"
 						model={field}
 						prop="language"
+						showSearch={true}
+						filterOption={filterLanguageOption}
 						options={languagePackStore.supportedLanguages}
 					/>
 				) : null}
 				{children}
 				<StyledFormItem label="Preview of field values">
 					{field.options.length > 0 ? (
-						<Select defaultValue={field.options[0].value} value={previewValue}>
+						<Select value={field.options[0].value}>
 							{field.options.map((option) => (
 								<Option key={option.value} value={option.value}>
 									{option.name}

@@ -11,10 +11,94 @@ import { fromPromise } from "mobx-utils";
 
 import { CLDRFramework, LanguageIdType, CLDR } from "@phensley/cldr";
 import bent from "bent";
+import { Option } from "./Superfield";
 
-export const SupportedLanguages: LanguageIdType[] = ["en", "es", "he"];
+export const SupportedLanguages: LanguageIdType[] = [
+	"en",
+	"af",
+	"am",
+	"ar",
+	"as",
+	"az",
+	"be",
+	"bg",
+	"bn",
+	"bs",
+	"ca",
+	"cs",
+	"cy",
+	"da",
+	"de",
+	"el",
+	"es",
+	"et",
+	"eu",
+	"fa",
+	"fi",
+	"fil",
+	"fr",
+	"ga",
+	"gl",
+	"gu",
+	"he",
+	"hi",
+	"hr",
+	"hu",
+	"hy",
+	"id",
+	"is",
+	"it",
+	"ja",
+	"jv",
+	"ka",
+	"kk",
+	"km",
+	"kn",
+	"ko",
+	"ky",
+	"lo",
+	"lt",
+	"lv",
+	"mk",
+	"ml",
+	"mn",
+	"mr",
+	"ms",
+	"my",
+	"nb",
+	"ne",
+	"nl",
+	"or",
+	"pa",
+	"pl",
+	"ps",
+	"pt",
+	"ro",
+	"ru",
+	"sd",
+	"si",
+	"sk",
+	"sl",
+	"so",
+	"sq",
+	"sr",
+	"sv",
+	"sw",
+	"ta",
+	"te",
+	"th",
+	"tk",
+	"tr",
+	"uk",
+	"ur",
+	"uz",
+	"vi",
+	"yue",
+	"zh",
+	"zu",
+];
 
-const packurl = `https://cdn.jsdelivr.net/npm/@phensley/cldr@1.2.0/packs`;
+const packurl = `https://cdn.jsdelivr.net/npm/@phensley/cldr@1.2.1/packs`;
 
 export enum LoadingStatus {
 	pending = "pending",
@@ -37,6 +121,11 @@ export interface LanguageInfo {
 // }
 
 const getJSON = bent("GET", "json", 200);
+
+interface Option {
+	value: string;
+	name: string;
+}
 
 export class LanguagePack {
 	code: LanguageIdType;
@@ -111,12 +200,21 @@ export class LanguagePackStore {
 		log.debug("LanguagePackStore.onEnglishLoaded");
 		const generalCLDR = this.get("en").cldr.General;
 
-		this.supportedLanguages = SupportedLanguages.map((code) => {
+		// Since it's not an action, we first sort and then set the obserable
+		const languageOptions = SupportedLanguages.map((code) => {
 			return {
 				value: code,
 				name: generalCLDR.getLanguageDisplayName(code),
 			};
 		});
+
+		languageOptions.sort(this.compareFunction);
+
+		this.supportedLanguages = languageOptions;
+	}
+
+	compareFunction(a: Option, b: Option): number {
+		return a.name.localeCompare(b.name);
 	}
 }
 

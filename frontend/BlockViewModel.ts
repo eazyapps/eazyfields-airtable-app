@@ -1,33 +1,42 @@
 import log from "loglevel";
 
-import { observable, decorate, action, computed } from "mobx";
+import { observable, decorate, autorun, computed } from "mobx";
 
 import Superfield, { SuperfieldType } from "./models/Superfield";
 import CountryField from "./models/CountryField";
 import CalendarField from "./models/CalendarField";
 import YearField from "./models/YearField";
 import TimeField from "./models/TimeField";
+import { globalConfig } from "@airtable/blocks";
+import { LanguageIdType } from "@phensley/cldr";
 
 export { SuperfieldType } from "./models/Superfield";
 
 export class BlockViewModel {
-	// showSettings: boolean;
 	_fields: Map<SuperfieldType, Superfield>;
 	activeSuperfieldType: SuperfieldType;
+	activeLanguageSaver: null | Function;
 
 	constructor() {
 		log.debug("BlockViewModel.constructor");
-		// this.showSettings = false;
 		this._fields = new Map();
 		this.activeSuperfieldType = SuperfieldType.country;
+		this.activeLanguageSaver = null;
 	}
 
 	get activeField(): Superfield {
-		if (this._fields.has(this.activeSuperfieldType)) {
-			return this._fields.get(this.activeSuperfieldType);
+		let field = this._fields.get(this.activeSuperfieldType);
+		if (!field) {
+			field = this.createField(this.activeSuperfieldType);
+			this._fields.set(this.activeSuperfieldType, field);
 		}
-		const field = this.createField(this.activeSuperfieldType);
-		this._fields.set(this.activeSuperfieldType, field);
+		const activeLanguage = globalConfig.get([
+			"config",
+			"activeLanguage",
+		]) as LanguageIdType;
+		if (activeLanguage) {
+			field.language = activeLanguage;
+		}
 		return field;
 	}
 
@@ -49,22 +58,20 @@ export class BlockViewModel {
 				);
 		}
 	}
-
-	// toggleShowSettings(): void {
-	// 	this.showSettings = !this.showSettings;
-	// }
-
-	// hideSettings(): void {
-	// 	this.showSettings = false;
-	// }
 }
 
 decorate(BlockViewModel, {
-	// showSettings: observable,
 	activeSuperfieldType: observable,
 	activeField: computed,
 });
 
 const viewModel = new BlockViewModel();
+
+viewModel.activeLanguageSaver = autorun(() => {
+	globalConfig.setAsync(
+		["config", "activeLanguage"],
+		viewModel.activeField.language
+	);
+});
 
 export default viewModel;

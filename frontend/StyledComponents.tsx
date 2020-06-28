@@ -1,7 +1,15 @@
 import log from "loglevel";
 import styled, { css } from "styled-components";
 
-import { Collapse, Form, Layout, Menu, Divider, Button } from "antd";
+import {
+	Collapse,
+	Form,
+	Layout,
+	Menu,
+	Divider,
+	Button,
+	Typography,
+} from "antd";
 const { Sider, Content } = Layout;
 
 import { Tablet } from "./viewport";
@@ -86,6 +94,21 @@ export const StyledLink = styled.a`
 	&:hover {
 		opacity: 0.75;
 	}
+`;
+
+export const StyledLogoWrapper = styled(StyledLink)`
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+`;
+
+export const StyledLogoText = styled(Typography.Text)`
+	font-family: "Montserrat", -apple-system, system-ui, BlinkMacSystemFont,
+		"Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue",
+		sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+
+	font-size: 14px;
+	margin-left: 6px;
 `;
 
 export const StyledInnerLayout = styled(Layout)`

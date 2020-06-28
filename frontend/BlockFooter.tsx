@@ -9,11 +9,18 @@ import { Layout, Typography } from "antd";
 const { Footer } = Layout;
 const { Text } = Typography;
 
-import { StyledLink } from "./StyledComponents";
+import {
+	StyledLink,
+	StyledLogoWrapper,
+	StyledLogoText,
+} from "./StyledComponents";
 
 const StyledLogo = styled.img`
-	max-height: 16px;
-	vertical-align: middle;
+	max-height: 12px;
+`;
+
+const StyledFooterLogoText = styled(StyledLogoText)`
+	margin-left: 4px;
 `;
 
 export default function BlockFooter() {
@@ -43,11 +50,14 @@ export default function BlockFooter() {
 					marginRight: "4px",
 				}}
 			>
-				Powered by{" "}
+				Powered by:{" "}
 			</Text>
-			<StyledLink href="https://superblocks.at" target="_blank">
-				<StyledLogo src="https://superblocks.at/superblocks-domain-logo-2/" />
-			</StyledLink>
+			<StyledLogoWrapper href="https://superblocks.at" target="_blank">
+				<StyledLogo src="https://superblocks.at/superblocks-logo-180x180/" />
+				<StyledFooterLogoText strong={true}>
+					Superblocks.at
+				</StyledFooterLogoText>
+			</StyledLogoWrapper>
 		</Footer>
 	);
 }
