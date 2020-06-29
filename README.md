@@ -28,6 +28,12 @@ This block uses:
 
 https://github.com/eazyforms/superfields-block
 
+3. Install the block into your base by releasing it, using the following command:
+
+```
+block release
+```
+
 ## Contributions
 
 Are more than welcome. The goal is to have the community expand the block and it's field selection so that the entire Airtable community can benefit.
