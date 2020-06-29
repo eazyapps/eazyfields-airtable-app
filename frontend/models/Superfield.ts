@@ -183,6 +183,12 @@ export default abstract class Superfield {
 			this.createError = null;
 		}
 	}
+
+	reset(): void {
+		this._table = null;
+		this.creator = null;
+		this.createError = null;
+	}
 }
 
 decorate(Superfield, {
@@ -201,4 +207,5 @@ decorate(Superfield, {
 	onValuesChange: action,
 	onActiveTableIdChange: action.bound,
 	formValues: computed,
+	reset: action,
 });

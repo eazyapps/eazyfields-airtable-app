@@ -30,6 +30,8 @@ export class BlockViewModel {
 			field = this.createField(this.activeSuperfieldType);
 			this._fields.set(this.activeSuperfieldType, field);
 		}
+		field.reset();
+
 		const activeLanguage = globalConfig.get([
 			"config",
 			"activeLanguage",
