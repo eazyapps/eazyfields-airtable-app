@@ -1,4 +1,4 @@
-# Superfields
+# Eazyfields
 
 Create Airtable fields with pre-populated options for:
 
@@ -26,7 +26,7 @@ This block uses:
 
 2. Follow the instructions [here](https://airtable.com/developers/blocks/guides/hello-world-tutorial#create-a-new-block) to create a new block - but in _Start from an example_, choose _Remix from GitHub_ and in _GitHub repository_, enter the URL for this repository:
 
-https://github.com/eazyforms/superfields-block
+https://github.com/superblocks-at/eazyfields-block
 
 3. Install the block into your base by releasing it, using the following command:
 
