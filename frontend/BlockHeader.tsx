@@ -14,7 +14,13 @@ const StyledLogo = styled.img`
 	max-height: 16px;
 `;
 
-const BlockHeader = () => {
+const BlockHeader = ({
+	title,
+	children,
+}: {
+	title: string;
+	children?: any;
+}) => {
 	return (
 		<Header
 			style={{
@@ -36,8 +42,9 @@ const BlockHeader = () => {
 		>
 			<StyledLogoWrapper href="https://superblocks.at" target="_blank">
 				<StyledLogo src="https://superblocks.at/superblocks-logo-180x180/" />
-				<StyledLogoText strong={true}>Superfields</StyledLogoText>
+				<StyledLogoText strong={true}>{title}</StyledLogoText>
 			</StyledLogoWrapper>
+			{children}
 		</Header>
 	);
 };
