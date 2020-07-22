@@ -1,6 +1,6 @@
 {
     "dependencies": {
-        "@airtable/blocks": "0.0.52",
+        "@airtable/blocks": "0.0.53",
         "@phensley/cldr": "^1.2.1",
         "@types/bent": "^7.0.2",
         "@types/moment": "^2.13.0",
