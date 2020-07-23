@@ -11,9 +11,9 @@ import {
 	StyledFormLayout,
 } from "./StyledComponents";
 import MainMenu from "./MainMenu";
-import SuperfieldRouter from "./SuperfieldRouter";
+import EazyfieldRouter from "./EazyfieldRouter";
 
-export default function SupefieldsBlock() {
+export default function EazyfieldsBlock() {
 	return (
 		<ErrorBoundary>
 			<Layout
@@ -27,13 +27,13 @@ export default function SupefieldsBlock() {
 					paddingBottom: 0,
 				}}
 			>
-				<BlockHeader />
+				<BlockHeader title="Eazyfields" />
 				<StyledSider theme="light" width="220px">
 					<MainMenu />
 				</StyledSider>
 				<StyledFormLayout>
 					<StyledFormContent>
-						<SuperfieldRouter />
+						<EazyfieldRouter />
 					</StyledFormContent>
 				</StyledFormLayout>
 				<BlockFooter />

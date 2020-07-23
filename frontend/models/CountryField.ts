@@ -1,7 +1,6 @@
 import loglevel from "loglevel";
 const log = loglevel.getLogger("CountryField");
-log.setLevel("debug");
-log.debug("CountryField");
+// log.setLevel("debug");
 
 import chai from "chai";
 const { expect } = chai;
@@ -13,14 +12,14 @@ import * as mobxUtils from "mobx-utils";
 
 import { LanguageIdType, RegionIdType } from "@phensley/cldr";
 import languagePackStore from "./LanguagePackStore";
-import Superfield, { Option } from "./Superfield";
+import Eazyfield, { Option } from "./Eazyfield";
 
 export interface CountryInfo extends Option {
 	value: RegionIdType;
 	name: string;
 }
 
-export default class CountryField extends Superfield {
+export default class CountryField extends Eazyfield {
 	countryCodes: [];
 
 	constructor(language: LanguageIdType) {

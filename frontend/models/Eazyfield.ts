@@ -1,7 +1,6 @@
 import loglevel from "loglevel";
-const log = loglevel.getLogger("Superfield");
-log.setLevel("debug");
-log.debug("Superfield");
+const log = loglevel.getLogger("Eazyfield");
+// log.setLevel("debug");
 
 import chai from "chai";
 const { expect } = chai;
@@ -18,7 +17,7 @@ import languagePackStore from "./LanguagePackStore";
 // We use strings for enum values, for easier logging and debugging.
 // The value of calendar fields (month and weekday) is used to get data from cldr,
 // so don't change it
-export enum SuperfieldType {
+export enum EazyfieldType {
 	country = "country",
 	year = "year",
 	month = "months",
@@ -40,7 +39,7 @@ export interface Option extends Choice {
 	value: string;
 }
 
-export default abstract class Superfield {
+export default abstract class Eazyfield {
 	_table: Table;
 	activeTableId: string;
 	name: string;
@@ -65,7 +64,7 @@ export default abstract class Superfield {
 	}
 
 	get formValues(): any {
-		log.debug("Superfield.formValues");
+		log.debug("Eazyfield.formValues");
 
 		return {
 			table: this.table ? this.table.id : null,
@@ -75,7 +74,7 @@ export default abstract class Superfield {
 	}
 
 	get options(): Option[] {
-		log.debug("Superfield.options, language:", this.language);
+		log.debug("Eazyfield.options, language:", this.language);
 		let options: Option[] = this.optionsByLanguage.get(this.language);
 		if (options) {
 			return options;
@@ -93,18 +92,18 @@ export default abstract class Superfield {
 	abstract get optionsForLanguage(): Option[];
 
 	onActiveTableIdChange(): void {
-		log.debug("Superfield.onActiveTableIdChange");
+		log.debug("Eazyfield.onActiveTableIdChange");
 		this.activeTableId = cursor.activeTableId;
 	}
 
 	get table(): Table {
-		log.debug("Superfield.table get");
+		log.debug("Eazyfield.table get");
 		if (this._table) {
 			return this._table;
 		}
 		if (this.activeTableId) {
 			const table = base.getTableById(cursor.activeTableId);
-			log.debug("Superfield.table get, activeTable:", table.name);
+			log.debug("Eazyfield.table get, activeTable:", table.name);
 			return table;
 		}
 		return null;
@@ -122,7 +121,7 @@ export default abstract class Superfield {
 		});
 		const options = { choices: choices };
 		log.debug(
-			"Superfield.create, name: ",
+			"Eazyfield.create, name: ",
 			name,
 			", type:",
 			type,
@@ -136,7 +135,7 @@ export default abstract class Superfield {
 		this.creator.then(
 			() => {},
 			(rejectReason: any) => {
-				log.error("Superfield.onCreateError, error:", rejectReason);
+				log.error("Eazyfield.onCreateError, error:", rejectReason);
 				this.createError = rejectReason;
 			}
 		);
@@ -146,7 +145,7 @@ export default abstract class Superfield {
 	get isCreating(): boolean {
 		const value: boolean =
 			this.creator != null && this.creator.state == "pending";
-		log.debug("Superfield.isCreating:", value);
+		log.debug("Eazyfield.isCreating:", value);
 		return value;
 	}
 
@@ -190,7 +189,8 @@ export default abstract class Superfield {
 	}
 }
 
-decorate(Superfield, {
+// @ts-ignore
+decorate(Eazyfield, {
 	_table: observable,
 	table: computed,
 	activeTableId: observable,

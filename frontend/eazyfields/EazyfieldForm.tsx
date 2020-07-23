@@ -1,6 +1,6 @@
 import loglevel from "loglevel";
-const log = loglevel.getLogger("SuperfieldForm");
-log.setLevel("debug");
+const log = loglevel.getLogger("EazyfieldForm");
+// log.setLevel("debug");
 
 import React, { useState } from "react";
 
@@ -15,9 +15,9 @@ import BoundSelect from "../components/BoundSelect";
 import TableSelector from "../components/TableSelector";
 import BoundInput from "../components/BoundInput";
 import languagePackStore from "../models/LanguagePackStore";
-import Superfield from "../models/Superfield";
+import Eazyfield from "../models/Eazyfield";
 
-const SuperfieldForm = observer(
+const EazyfieldForm = observer(
 	({
 		field,
 		formValues,
@@ -26,14 +26,14 @@ const SuperfieldForm = observer(
 		children,
 		hideLanguageSelection,
 	}: {
-		field: Superfield;
+		field: Eazyfield;
 		formValues: any;
 		previewValue?: string | number;
 		previewPlaceholder?: string;
 		children?: any;
 		hideLanguageSelection?: boolean;
 	}) => {
-		log.debug("SuperfieldForm.render");
+		log.debug("EazyfieldForm.render");
 
 		const [form] = Form.useForm();
 
@@ -47,25 +47,25 @@ const SuperfieldForm = observer(
 
 		const onFinish = (values) => {
 			try {
-				log.debug("SuperfieldForm.onFinish, values:", values);
+				log.debug("EazyfieldForm.onFinish, values:", values);
 				field.create(values);
 			} catch (e) {
-				log.error("SuperfieldForm.onFinish, error:", e);
+				log.error("EazyfieldForm.onFinish, error:", e);
 				setError(e);
 			}
 		};
 
 		const onFinishFailed = (errorInfo) => {
-			log.debug("SuperfieldForm.onFinishFailed, errorInfo:", errorInfo);
+			log.debug("EazyfieldForm.onFinishFailed, errorInfo:", errorInfo);
 		};
 
 		const onValuesChange = (changedValues, allValues) => {
-			log.debug("SuperfieldForm.onValuesChange, changedValues:", changedValues);
+			log.debug("EazyfieldForm.onValuesChange, changedValues:", changedValues);
 			field.onValuesChange(changedValues, allValues);
 		};
 
 		const validateUniqueName = (rule, value) => {
-			log.debug("SuperfieldForm.validateUniqueName, value:", value);
+			log.debug("EazyfieldForm.validateUniqueName, value:", value);
 			if (!value || !field.table) {
 				return Promise.resolve();
 			}
@@ -80,7 +80,7 @@ const SuperfieldForm = observer(
 			inputValue: string,
 			option: { name: string }
 		) => {
-			// log.debug("SuperfieldForm.filterLanguageOption, option:", option);
+			// log.debug("EazyfieldForm.filterLanguageOption, option:", option);
 			return option.name.toLowerCase().startsWith(inputValue.toLowerCase());
 		};
 
@@ -160,4 +160,4 @@ const SuperfieldForm = observer(
 	}
 );
 
-export default SuperfieldForm;
+export default EazyfieldForm;

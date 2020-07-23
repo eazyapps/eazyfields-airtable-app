@@ -1,13 +1,13 @@
 import loglevel from "loglevel";
 const log = loglevel.getLogger("YearFieldForm");
-log.setLevel("debug");
+// log.setLevel("debug");
 
 import React from "react";
 
 import { observer } from "mobx-react-lite";
 
 import BoundInputNumber from "../components/BoundInputNumber";
-import SuperfieldForm from "./SuperfieldForm";
+import EazyfieldForm from "./EazyfieldForm";
 import YearField from "../models/YearField";
 import { Rule } from "antd/lib/form";
 
@@ -45,7 +45,7 @@ const YearFieldForm = observer(({ field }: { field: YearField }) => {
 	}
 
 	return (
-		<SuperfieldForm
+		<EazyfieldForm
 			field={field}
 			formValues={field.yearFieldFormValues}
 			previewValue={
@@ -71,7 +71,7 @@ const YearFieldForm = observer(({ field }: { field: YearField }) => {
 				prop="lastYear"
 				{...extraLastYearProps}
 			/>
-		</SuperfieldForm>
+		</EazyfieldForm>
 	);
 });
 

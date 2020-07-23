@@ -1,5 +1,6 @@
-import log from "loglevel";
-log.setLevel("debug");
+import loglevel from "loglevel";
+const log = loglevel.getLogger("BoundTimePicker");
+// log.setLevel("debug");
 
 import { Moment } from "moment";
 

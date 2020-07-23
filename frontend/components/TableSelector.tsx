@@ -1,5 +1,6 @@
-import log from "loglevel";
-log.setLevel("debug");
+import loglevel from "loglevel";
+const log = loglevel.getLogger("TableSelector");
+// log.setLevel("debug");
 
 import React from "react";
 
@@ -11,10 +12,10 @@ const { Option } = Select;
 import { cursor } from "@airtable/blocks";
 import { useBase, useWatchable } from "@airtable/blocks/ui";
 
-import Superfield from "../models/Superfield";
+import Eazyfield from "../models/Eazyfield";
 import { StyledFormItem } from "../StyledComponents";
 
-const TableSelector = observer(({ field }: { field: Superfield }) => {
+const TableSelector = observer(({ field }: { field: Eazyfield }) => {
 	log.debug(
 		"TableSelector.render, table:",
 		field.table ? field.table.name : ""

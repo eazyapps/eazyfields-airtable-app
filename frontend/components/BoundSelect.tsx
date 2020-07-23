@@ -1,5 +1,6 @@
-import log from "loglevel";
-log.setLevel("debug");
+import loglevel from "loglevel";
+const log = loglevel.getLogger("BoundSelect");
+// log.setLevel("debug");
 
 import React from "react";
 
@@ -7,8 +8,6 @@ import { Select } from "antd";
 const { Option } = Select;
 
 import { observer } from "mobx-react-lite";
-
-import deep from "../deep";
 
 import { BoundComponentProps } from "./BoundComponent";
 import { StyledFormItem } from "../StyledComponents";
@@ -21,7 +20,7 @@ export interface OptionProps {
 export interface BoundSelectProps extends BoundComponentProps {
 	options: OptionProps[];
 	showSearch?: boolean;
-	filterOption?: boolean | Function;
+	filterOption?: any;
 }
 
 const BoundSelect = observer(

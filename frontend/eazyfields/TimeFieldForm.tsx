@@ -1,6 +1,6 @@
 import loglevel from "loglevel";
-const log = loglevel.getLogger("TimeSlotsFieldForm");
-log.setLevel("debug");
+const log = loglevel.getLogger("TimeFieldForm");
+// log.setLevel("debug");
 
 import { Moment } from "moment";
 
@@ -9,7 +9,7 @@ import React from "react";
 import { observer } from "mobx-react-lite";
 
 import BoundTimePicker from "../components/BoundTimePicker";
-import SuperfieldForm from "./SuperfieldForm";
+import EazyfieldForm from "./EazyfieldForm";
 import TimeField from "../models/TimeField";
 import BoundInputNumber from "../components/BoundInputNumber";
 
@@ -32,7 +32,7 @@ const TimeFieldForm = observer(({ field }: { field: TimeField }) => {
 	}
 
 	return (
-		<SuperfieldForm
+		<EazyfieldForm
 			field={field}
 			formValues={field.timeFieldFormValues}
 			previewValue={
@@ -81,7 +81,7 @@ const TimeFieldForm = observer(({ field }: { field: TimeField }) => {
 				model={field}
 				prop="gap"
 			/>
-		</SuperfieldForm>
+		</EazyfieldForm>
 	);
 });
 

@@ -1,14 +1,13 @@
 import loglevel from "loglevel";
 const log = loglevel.getLogger("YearField");
-log.setLevel("debug");
-log.debug("YearField");
+// log.setLevel("debug");
 
 import { observable, computed, decorate } from "mobx";
 
 import { LanguageIdType } from "@phensley/cldr";
-import Superfield, { Option } from "./Superfield";
+import Eazyfield, { Option } from "./Eazyfield";
 
-export default class YearField extends Superfield {
+export default class YearField extends Eazyfield {
 	firstYear: number;
 	lastYear: number;
 

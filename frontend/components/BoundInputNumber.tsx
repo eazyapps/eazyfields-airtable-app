@@ -1,5 +1,6 @@
-import log from "loglevel";
-log.setLevel("debug");
+import loglevel from "loglevel";
+const log = loglevel.getLogger("BoundInputNumber");
+// log.setLevel("debug");
 
 import React from "react";
 

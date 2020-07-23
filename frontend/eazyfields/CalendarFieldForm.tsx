@@ -1,13 +1,13 @@
 import loglevel from "loglevel";
 const log = loglevel.getLogger("CalendarFieldForm");
-log.setLevel("debug");
+// log.setLevel("debug");
 
 import React from "react";
 
 import { observer } from "mobx-react-lite";
 
 import BoundSelect from "../components/BoundSelect";
-import SuperfieldForm from "./SuperfieldForm";
+import EazyfieldForm from "./EazyfieldForm";
 import CalendarField from "../models/CalendarField";
 
 const CalendarFieldForm = observer(({ field }: { field: CalendarField }) => {
@@ -16,7 +16,7 @@ const CalendarFieldForm = observer(({ field }: { field: CalendarField }) => {
 	const widthOptions = field.widthOptions;
 
 	return (
-		<SuperfieldForm field={field} formValues={field.calendarFieldFormValues}>
+		<EazyfieldForm field={field} formValues={field.calendarFieldFormValues}>
 			<BoundSelect
 				name="width"
 				rules={[{ required: true, message: "Please select a format" }]}
@@ -27,7 +27,7 @@ const CalendarFieldForm = observer(({ field }: { field: CalendarField }) => {
 				defaultValue={widthOptions.length ? widthOptions[0].value : null}
 				placeholder="Loading options in selected language"
 			/>
-		</SuperfieldForm>
+		</EazyfieldForm>
 	);
 });
 

@@ -1,16 +1,15 @@
 import loglevel from "loglevel";
 const log = loglevel.getLogger("TimeField");
-log.setLevel("debug");
-log.debug("TimeField");
+// log.setLevel("debug");
 
 import moment, { Moment } from "moment";
 
 import { observable, computed, decorate } from "mobx";
 
 import { LanguageIdType } from "@phensley/cldr";
-import Superfield, { Option } from "./Superfield";
+import Eazyfield, { Option } from "./Eazyfield";
 
-export default class TimeField extends Superfield {
+export default class TimeField extends Eazyfield {
 	// In minutes from midnight
 	startTime: Moment;
 	endTime: Moment;

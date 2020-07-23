@@ -2,7 +2,7 @@ import log from "loglevel";
 
 import { observable, decorate, autorun, computed } from "mobx";
 
-import Superfield, { SuperfieldType } from "./models/Superfield";
+import Eazyfield, { EazyfieldType } from "./models/Eazyfield";
 import CountryField from "./models/CountryField";
 import CalendarField from "./models/CalendarField";
 import YearField from "./models/YearField";
@@ -10,25 +10,25 @@ import TimeField from "./models/TimeField";
 import { globalConfig } from "@airtable/blocks";
 import { LanguageIdType } from "@phensley/cldr";
 
-export { SuperfieldType } from "./models/Superfield";
+export { EazyfieldType } from "./models/Eazyfield";
 
 export class BlockViewModel {
-	_fields: Map<SuperfieldType, Superfield>;
-	activeSuperfieldType: SuperfieldType;
+	_fields: Map<EazyfieldType, Eazyfield>;
+	activeEazyfieldType: EazyfieldType;
 	activeLanguageSaver: null | Function;
 
 	constructor() {
 		log.debug("BlockViewModel.constructor");
 		this._fields = new Map();
-		this.activeSuperfieldType = SuperfieldType.country;
+		this.activeEazyfieldType = EazyfieldType.country;
 		this.activeLanguageSaver = null;
 	}
 
-	get activeField(): Superfield {
-		let field = this._fields.get(this.activeSuperfieldType);
+	get activeField(): Eazyfield {
+		let field = this._fields.get(this.activeEazyfieldType);
 		if (!field) {
-			field = this.createField(this.activeSuperfieldType);
-			this._fields.set(this.activeSuperfieldType, field);
+			field = this.createField(this.activeEazyfieldType);
+			this._fields.set(this.activeEazyfieldType, field);
 		}
 		field.reset();
 
@@ -42,17 +42,17 @@ export class BlockViewModel {
 		return field;
 	}
 
-	createField(type: SuperfieldType): Superfield {
+	createField(type: EazyfieldType): Eazyfield {
 		switch (type) {
-			case SuperfieldType.country:
+			case EazyfieldType.country:
 				return new CountryField("en");
-			case SuperfieldType.year:
+			case EazyfieldType.year:
 				return new YearField("en");
-			case SuperfieldType.month:
-				return new CalendarField("en", SuperfieldType.month);
-			case SuperfieldType.weekday:
-				return new CalendarField("en", SuperfieldType.weekday);
-			case SuperfieldType.time:
+			case EazyfieldType.month:
+				return new CalendarField("en", EazyfieldType.month);
+			case EazyfieldType.weekday:
+				return new CalendarField("en", EazyfieldType.weekday);
+			case EazyfieldType.time:
 				return new TimeField("en");
 			default:
 				throw new Error(
@@ -63,7 +63,7 @@ export class BlockViewModel {
 }
 
 decorate(BlockViewModel, {
-	activeSuperfieldType: observable,
+	activeEazyfieldType: observable,
 	activeField: computed,
 });
 

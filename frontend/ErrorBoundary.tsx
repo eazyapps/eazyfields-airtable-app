@@ -1,6 +1,6 @@
 import loglevel from "loglevel";
 const log = loglevel.getLogger("ErrorBoundary");
-log.setLevel("debug");
+// log.setLevel("debug");
 
 import React, { Component } from "react";
 

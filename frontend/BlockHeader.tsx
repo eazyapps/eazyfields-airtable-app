@@ -1,5 +1,6 @@
-import log from "loglevel";
-log.setLevel("debug");
+import loglevel from "loglevel";
+const log = loglevel.getLogger("BlockHeader");
+// log.setLevel("debug");
 
 import React from "react";
 
@@ -41,7 +42,7 @@ const BlockHeader = ({
 			}}
 		>
 			<StyledLogoWrapper href="https://superblocks.at" target="_blank">
-				<StyledLogo src="https://superblocks.at/superblocks-logo-180x180/" />
+				<StyledLogo src="https://superblocks.at/wp-content/uploads/superblocks-icon.png" />
 				<StyledLogoText strong={true}>{title}</StyledLogoText>
 			</StyledLogoWrapper>
 			{children}

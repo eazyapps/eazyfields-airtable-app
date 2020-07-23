@@ -1,17 +1,16 @@
 import loglevel from "loglevel";
 const log = loglevel.getLogger("LanguagePackStore");
-log.setLevel("debug");
-log.debug("LanguagePackStore");
+// log.setLevel("debug");
 
 import chai from "chai";
 const { expect } = chai;
 
-import { decorate, observable, computed, action } from "mobx";
-import { fromPromise } from "mobx-utils";
+import { decorate, observable } from "mobx";
+import { fromPromise, IPromiseBasedObservable } from "mobx-utils";
 
 import { CLDRFramework, LanguageIdType, CLDR } from "@phensley/cldr";
 import bent from "bent";
-import { Option } from "./Superfield";
+import { Option } from "./Eazyfield";
 
 export const SupportedLanguages: LanguageIdType[] = [
 	"en",
@@ -122,21 +121,16 @@ export interface LanguageInfo {
 
 const getJSON = bent("GET", "json", 200);
 
-interface Option {
-	value: string;
-	name: string;
-}
-
 export class LanguagePack {
 	code: LanguageIdType;
 	json: object;
 	cldr: CLDR;
-	loader: Promise<any>;
+	loader: IPromiseBasedObservable<any> | null;
 
 	constructor(code: LanguageIdType) {
 		log.debug("LanguagePack.constructor");
 		this.code = code;
-		this.loader = fromPromise(getJSON(`${packurl}/${code}.json`)) as any;
+		this.loader = fromPromise(getJSON(`${packurl}/${code}.json`));
 		this.loader.then(this.onLoaded.bind(this));
 	}
 

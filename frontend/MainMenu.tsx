@@ -1,5 +1,6 @@
-import log from "loglevel";
-log.setLevel("debug");
+import loglevel from "loglevel";
+const log = loglevel.getLogger("MainMenu");
+// log.setLevel("debug");
 
 import React from "react";
 
@@ -10,7 +11,7 @@ import { StyledMenuItem } from "./StyledComponents";
 
 import { observer } from "mobx-react-lite";
 
-import viewModel, { SuperfieldType } from "./BlockViewModel";
+import viewModel, { EazyfieldType } from "./BlockViewModel";
 import { Menu } from "antd";
 
 const MainMenu = observer(() => {
@@ -18,7 +19,7 @@ const MainMenu = observer(() => {
 
 	const onSelect = ({ key }) => {
 		log.debug("MainMenu.onSelect, key:", key);
-		viewModel.activeSuperfieldType = key;
+		viewModel.activeEazyfieldType = key;
 	};
 
 	return (
@@ -38,25 +39,25 @@ const MainMenu = observer(() => {
 		// 	</div>
 		<Menu
 			mode="inline"
-			selectedKeys={[viewModel.activeSuperfieldType]}
+			selectedKeys={[viewModel.activeEazyfieldType]}
 			onSelect={onSelect}
 		>
-			<StyledMenuItem key={SuperfieldType.country} icon={<DragOutlined />}>
+			<StyledMenuItem key={EazyfieldType.country} icon={<DragOutlined />}>
 				Country
 			</StyledMenuItem>
-			<StyledMenuItem key={SuperfieldType.year} icon={<InteractionOutlined />}>
+			<StyledMenuItem key={EazyfieldType.year} icon={<InteractionOutlined />}>
 				Year
 			</StyledMenuItem>
-			<StyledMenuItem key={SuperfieldType.month} icon={<InteractionOutlined />}>
+			<StyledMenuItem key={EazyfieldType.month} icon={<InteractionOutlined />}>
 				Month
 			</StyledMenuItem>
 			<StyledMenuItem
-				key={SuperfieldType.weekday}
+				key={EazyfieldType.weekday}
 				icon={<InteractionOutlined />}
 			>
 				Day of week
 			</StyledMenuItem>
-			<StyledMenuItem key={SuperfieldType.time} icon={<InteractionOutlined />}>
+			<StyledMenuItem key={EazyfieldType.time} icon={<InteractionOutlined />}>
 				Time
 			</StyledMenuItem>
 		</Menu>
