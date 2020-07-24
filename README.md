@@ -10,7 +10,7 @@
 - [Contributions](#contributions)
 - [License](#license)
 - [Implementation details](#implementation-details)
-- [Looking for help with custom blocks development?](#looking-for-help-with-custom-blocks-development?)
+- [Looking for help with blocks development?](#looking-for-help-with-blocks-development?)
 - [How to remix this block](#how-to-remix-this-block)
 
 ## About this block
@@ -69,9 +69,9 @@ This block uses:
 - Allows for easier and faster testing.
 - Creates components that re-render truly only when something they directly depend on in their rendering changes.
 
-## Looking for help with custom blocks development?
+## Looking for help with blocks development?
 
-We at [Superblocks](https://superblocks.at) have already developed quite a few [custom blocks](https://superblocks.at/#blocks) and more are coming soon. We also offer extremely quick and reliable [custom blocks development services](https://superblocks.at/#services). Feel free to [contact us](https://superblocks.at/#services).
+We at [Superblocks](https://superblocks.at) have already developed quite a few [blocks](https://superblocks.at/#blocks) and more are coming soon. We also offer extremely quick and reliable [block development services](https://superblocks.at/#services). Feel free to [contact us](https://superblocks.at/#services).
 
 ## How to remix this block
 
