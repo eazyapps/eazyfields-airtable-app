@@ -5,7 +5,7 @@
 ## Table of Contents
 
 - [About this block](#about-this-block)
-- [screenshot](#screenshot)
+- [Screenshot](#screenshot)
 - [Installation](#installation)
 - [Contributions](#contributions)
 - [License](#license)
