@@ -9,13 +9,16 @@ import { observer } from "mobx-react-lite";
 import { Form, Select } from "antd";
 const { Option } = Select;
 
+import { colorUtils, colors } from "@airtable/blocks/ui";
+const blueBright = colorUtils.getHexForColor(colors.BLUE_BRIGHT);
+
 import { StyledFormItem, StyledSubmitButton } from "../StyledComponents";
 
 import BoundSelect from "../components/BoundSelect";
 import TableSelector from "../components/TableSelector";
 import BoundInput from "../components/BoundInput";
 import languagePackStore from "../models/LanguagePackStore";
-import Eazyfield from "../models/Eazyfield";
+import Eazyfield, { SubmitStatus } from "../models/Eazyfield";
 
 const EazyfieldForm = observer(
 	({
@@ -151,6 +154,7 @@ const EazyfieldForm = observer(
 						loading={field.isCreating}
 						justified="true"
 						disabled={field.options.length == 0 ? true : undefined}
+						style={{ backgroundColor: blueBright }}
 					>
 						Create field
 					</StyledSubmitButton>

@@ -4,15 +4,25 @@ const log = loglevel.getLogger("MainMenu");
 
 import React from "react";
 
-import { Typography } from "antd";
+import { Typography, Menu } from "antd";
 const { Text } = Typography;
-import { DragOutlined, InteractionOutlined } from "@ant-design/icons";
+
+import styled from "styled-components";
+import { Icon } from "@airtable/blocks/ui";
+
+import { InteractionOutlined } from "@ant-design/icons";
 import { StyledMenuItem } from "./StyledComponents";
 
 import { observer } from "mobx-react-lite";
 
 import viewModel, { EazyfieldType } from "./BlockViewModel";
-import { Menu } from "antd";
+
+const StyledIcon = styled(Icon)`
+	margin-right: 10px;
+	text-align: center;
+	vertical-align: -3px;
+	/* line-height: 30px; */
+`;
 
 const MainMenu = observer(() => {
 	log.debug("MainMenu.render");
@@ -42,22 +52,31 @@ const MainMenu = observer(() => {
 			selectedKeys={[viewModel.activeEazyfieldType]}
 			onSelect={onSelect}
 		>
-			<StyledMenuItem key={EazyfieldType.country} icon={<DragOutlined />}>
+			<StyledMenuItem
+				key={EazyfieldType.country}
+				icon={<StyledIcon name="public" />}
+			>
 				Country
 			</StyledMenuItem>
-			<StyledMenuItem key={EazyfieldType.year} icon={<InteractionOutlined />}>
+			<StyledMenuItem key={EazyfieldType.year} icon={<StyledIcon name="day" />}>
 				Year
 			</StyledMenuItem>
-			<StyledMenuItem key={EazyfieldType.month} icon={<InteractionOutlined />}>
+			<StyledMenuItem
+				key={EazyfieldType.month}
+				icon={<StyledIcon name="day" />}
+			>
 				Month
 			</StyledMenuItem>
 			<StyledMenuItem
 				key={EazyfieldType.weekday}
-				icon={<InteractionOutlined />}
+				icon={<StyledIcon name="day" />}
 			>
 				Day of week
 			</StyledMenuItem>
-			<StyledMenuItem key={EazyfieldType.time} icon={<InteractionOutlined />}>
+			<StyledMenuItem
+				key={EazyfieldType.time}
+				icon={<StyledIcon name="time" />}
+			>
 				Time
 			</StyledMenuItem>
 		</Menu>

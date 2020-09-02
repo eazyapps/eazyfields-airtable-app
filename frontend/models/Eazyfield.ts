@@ -27,7 +27,7 @@ export enum EazyfieldType {
 
 export enum SubmitStatus {
 	// We use antd form validationStatus warning, since it has a more appropiate color
-	success = "warning",
+	success = "success",
 	error = "error",
 }
 
@@ -130,7 +130,7 @@ export default abstract class Eazyfield {
 		);
 		this._table = this.table;
 		this.creator = fromPromise(
-			this._table.unstable_createFieldAsync(name, type, options)
+			this._table.createFieldAsync(name, type, options)
 		);
 		this.creator.then(
 			() => {},
@@ -168,9 +168,11 @@ export default abstract class Eazyfield {
 		}
 		switch (this.submitStatus) {
 			case SubmitStatus.success:
-				return `Successfully created the ${this.name} field in the ${this._table.name} table`;
+				return `Successfully created the "${this.name}" field in the "${this._table.name}" table`;
 			case SubmitStatus.error:
 				return `Something went wrong. Please try again. If the problem persists, please contact support@superblocks.at`;
+			default:
+				return null;
 		}
 	}
 

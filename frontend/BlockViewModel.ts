@@ -16,12 +16,19 @@ export class BlockViewModel {
 	_fields: Map<EazyfieldType, Eazyfield>;
 	activeEazyfieldType: EazyfieldType;
 	activeLanguageSaver: null | Function;
+	showHelp: boolean;
 
 	constructor() {
 		log.debug("BlockViewModel.constructor");
 		this._fields = new Map();
 		this.activeEazyfieldType = EazyfieldType.country;
 		this.activeLanguageSaver = null;
+		this.showHelp =
+			(globalConfig.get(["config", "notFirstRun"]) as boolean) !== true;
+		if (this.showHelp) {
+			globalConfig.setAsync(["config", "notFirstRun"], true);
+		}
+		// this.showHelp = true;
 	}
 
 	get activeField(): Eazyfield {
@@ -65,6 +72,7 @@ export class BlockViewModel {
 decorate(BlockViewModel, {
 	activeEazyfieldType: observable,
 	activeField: computed,
+	showHelp: observable,
 });
 
 const viewModel = new BlockViewModel();

@@ -1,3 +1,7 @@
+import loglevel from "loglevel";
+const log = loglevel.getLogger("StyledComponents");
+log.setLevel("debug");
+
 import styled, { css } from "styled-components";
 
 import { Form, Layout, Menu, Divider, Button, Typography, Select } from "antd";
@@ -11,155 +15,156 @@ export { Mobile, Tablet, Desktop } from "./viewport";
 // ): ThemedStyledFunction<P & U, T, O & U> => fn;
 
 export const scrollbableStyle = css`
-  overflow-y: auto;
+	overflow-y: auto;
 
-  &::-webkit-scrollbar {
-    width: 12px;
-    height: 12px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-  }
+	&::-webkit-scrollbar {
+		width: 12px;
+		height: 12px;
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+	}
 
-  &::-webkit-scrollbar-button {
-    display: none;
-    height: 0;
-    width: 0;
-  }
+	&::-webkit-scrollbar-button {
+		display: none;
+		height: 0;
+		width: 0;
+	}
 
-  &::-webkit-scrollbar-thumb {
-    background-color: hsla(0, 0%, 0%, 0.35);
-    background-clip: padding-box;
-    border: 3px solid rgba(0, 0, 0, 0);
-    border-radius: 6px;
-    min-height: 36px;
-  }
+	&::-webkit-scrollbar-thumb {
+		background-color: hsla(0, 0%, 0%, 0.35);
+		background-clip: padding-box;
+		border: 3px solid rgba(0, 0, 0, 0);
+		border-radius: 6px;
+		min-height: 36px;
+	}
 `;
 
 interface Props {
-  backgroundcolor?: string;
-  bordercolor?: string;
-  textcolor?: string;
-  justified?: string;
-  width?: any;
-  isDragging?: boolean;
-  isDraggingOther?: boolean;
+	backgroundcolor?: string;
+	bordercolor?: string;
+	textcolor?: string;
+	justified?: string;
+	width?: any;
+	isDragging?: boolean;
+	isDraggingOther?: boolean;
 }
 
 export const StyledFormLayout = styled(Layout)`
-  ${scrollbableStyle}
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: white;
+	${scrollbableStyle}
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	background-color: white;
 `;
 
 export const StyledFormContent = styled(Content)`
-  width: 100%;
-  max-width: 400px;
-  padding: 12px;
-  /* padding-top: 32px;
+	width: 100%;
+	max-width: 400px;
+	padding: 12px;
+	/* padding-top: 32px;
 	padding-bottom: 32px;
 	padding-left: 12px;
 	padding-right: 12px; */
 `;
 
-export const StyledSubmitButton = styled(Button)`
-	margin-bottom: 8px;
-	/* background-color: ${(props: Props) => props.backgroundcolor};
+/* background-color: ${(props: Props) => props.backgroundcolor};
 	border-color: ${(props) => props.bordercolor};
 	color: ${(props) => props.textcolor}; */
+
+/* background-color: ${(props) => props.backgroundcolor};
+		border-color: ${(props) => props.bordercolor}; */
+export const StyledSubmitButton = styled(Button)`
+	margin-bottom: 8px;
 	${(props) => (props.justified ? "width: 100%;" : null)}
 
 	&&:hover {
-		/* background-color: ${(props) => props.backgroundcolor};
-		border-color: ${(props) => props.bordercolor}; */
 		opacity: 0.8;
 	}
 `;
 
 export const StyledDivider = styled(Divider)`
-  && {
-    margin-top: 8px;
-    margin-bottom: 8px;
-    /* font-weight: unset; */
-    font-size: 14px;
-  }
+	&& {
+		margin-top: 8px;
+		margin-bottom: 8px;
+		/* font-weight: unset; */
+		font-size: 14px;
+	}
 `;
 
 export const StyledLink = styled.a`
-  opacity: 1;
+	opacity: 1;
 
-  &:active,
-  &:focus {
-    box-shadow: none;
-  }
+	&:active,
+	&:focus {
+		box-shadow: none;
+	}
 
-  &:hover {
-    opacity: 0.75;
-  }
+	&:hover {
+		opacity: 0.75;
+	}
 `;
 
 export const StyledLogoWrapper = styled(StyledLink)`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
 `;
 
 export const StyledLogoText = styled(Typography.Text)`
-  font-family: "Montserrat", -apple-system, system-ui, BlinkMacSystemFont,
-    "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue",
-    sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+	font-family: "Montserrat", -apple-system, system-ui, BlinkMacSystemFont,
+		"Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue",
+		sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 
-  font-size: 14px;
-  margin-left: 6px;
+	font-size: 14px;
+	margin-left: 6px;
 `;
 
 export const StyledInnerLayout = styled(Layout)`
-  position: fixed;
-  top: 34px;
-  bottom: 26px;
-  /* height: calc(100vh - 60px); */
-  width: 100%;
-  background-color: white;
+	position: fixed;
+	top: 34px;
+	bottom: 26px;
+	/* height: calc(100vh - 60px); */
+	width: 100%;
+	background-color: white;
 `;
 
 export const StyledSider = styled(Sider)`
-  ${scrollbableStyle}
-  box-shadow: rgba(0, 0, 0, 0.1) 2px 0 0 0;
+	${scrollbableStyle}
+	box-shadow: rgba(0, 0, 0, 0.1) 2px 0 0 0;
 `;
 
 export const StyledContent = styled(Content)`
-  ${scrollbableStyle}
-  padding: 12px;
+	${scrollbableStyle}
+	padding: 12px;
 `;
 
 export const StyledMenu = styled(Menu)`
-  && {
-    width: calc(100% - 2px);
-    border: none;
-  }
+	&& {
+		width: calc(100% - 2px);
+		border: none;
+	}
 `;
 
 export const StyledMenuItem = styled(Menu.Item)`
-  && {
-    height: 30px;
-    line-height: 30px;
-    color: rgba(0, 0, 0, 0.65);
-    /* padding-left: 0 !important; */
-    /* padding-right: 0 !important; */
-  }
+	&& {
+		height: 30px;
+		line-height: 30px;
+		color: rgba(0, 0, 0, 0.65);
+		padding-left: 12px !important;
+		/* padding-right: 0 !important; */
+	}
 
-  && a {
-    color: rgba(0, 0, 0, 0.65);
-  }
+	&& a {
+		color: rgba(0, 0, 0, 0.65);
+	}
 
-  &&:hover,
-  &&:hover a {
-    color: rgb(24, 144, 255);
-  }
+	&&:hover,
+	&&:hover a {
+		color: rgb(24, 144, 255);
+	}
 `;
 
 export const StyledFormItemContainer = styled.div`
@@ -168,8 +173,8 @@ export const StyledFormItemContainer = styled.div`
 	padding-left: 5px;
 	padding-right: 5px;
 	${(props) => {
-    if (props.isDragging) {
-      return `
+		if (props.isDragging) {
+			return `
 				box-shadow: 0 0 0 2px #71d7f7; 
 				&& .sb-form-field-editor {
 				box-shadow: 0 0 0 2px #71d7f7; 
@@ -184,10 +189,10 @@ export const StyledFormItemContainer = styled.div`
 			&& .sb-toolbar {
 				display: inherit;
 			}`;
-    } else {
-      return null;
-    }
-  }};
+		} else {
+			return null;
+		}
+	}};
 
 	&:hover .sb-form-item-editor {
 		z-index: 1;
@@ -223,8 +228,8 @@ export const StyledFormItemContainer = styled.div`
 	}
 
 	/* ${(props) => {
-    if (props.isDraggingOther) {
-      return `
+		if (props.isDraggingOther) {
+			return `
 			&& .sb-form-item-editor {
 				display: none;
 				box-shadow: none;
@@ -235,32 +240,39 @@ export const StyledFormItemContainer = styled.div`
 			&& .sb-toolbar {
 				display: none;
 			}`;
-    } else {
-      return `
+		} else {
+			return `
 			`;
-    }
-  }}; */
+		}
+	}}; */
 `;
 
 export const StyledFormItemEditor = styled.div`
-  display: hidden;
-  position: absolute;
-  top: -28px;
-  bottom: 0;
-  left: 0;
-  right: 0;
+	display: hidden;
+	position: absolute;
+	top: -28px;
+	bottom: 0;
+	left: 0;
+	right: 0;
 `;
 
-export const StyledFormItem = styled(Form.Item)`
+export interface StyledFormItemProps {
+	explaincolor?: string;
+}
+
+// import { colorUtils, colors } from "@airtable/blocks/ui";
+// const green = colorUtils.getHexForColor(colors.GREEN);
+
+export const StyledFormItem = styled(Form.Item)<StyledFormItemProps>`
 	margin-bottom: 8px;
 
 	&& label:after {
 		display: inherit;
 	}
 
-	.ant-form-item-explain {
-		text-align: center;
-	}
+  &&.ant-form-item-has-success .ant-form-item-explain {
+		color: #11af22;
+  }
 
 	/* .ant-form-item-label {
 		text-align: left;
@@ -287,27 +299,27 @@ export const StyledFormItem = styled(Form.Item)`
 
 // Use className="ef-toolbar" to show it on hover of container element
 export const StyledFormItemToolbar = styled.div`
-  display: none;
+	display: none;
 
-  .ant-btn {
-    color: white;
-    background-color: #10bcf2;
-    background-image: linear-gradient(0deg, #41c9f4, #71d7f7);
-    border: none;
-    border-radius: 0;
-  }
+	.ant-btn {
+		color: white;
+		background-color: #10bcf2;
+		background-image: linear-gradient(0deg, #41c9f4, #71d7f7);
+		border: none;
+		border-radius: 0;
+	}
 
-  && .ant-btn:hover,
-  && .ant-btn:active {
-    color: white;
-    background-color: #10bcf2;
-    background-image: none;
-  }
+	&& .ant-btn:hover,
+	&& .ant-btn:active {
+		color: white;
+		background-color: #10bcf2;
+		background-image: none;
+	}
 `;
 
 export const StyledSelect = styled(Select)`
-  .ant-select-selection-placeholder {
-    color: rgba(0, 0, 0, 0.65);
-    opacity: unset;
-  }
+	.ant-select-selection-placeholder {
+		color: rgba(0, 0, 0, 0.65);
+		opacity: unset;
+	}
 `;

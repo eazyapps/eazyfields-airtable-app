@@ -1,17 +1,40 @@
+import loglevel from "loglevel";
+const log = loglevel.getLogger("EazyfieldsBlock");
+log.setLevel("debug");
+
 import React from "react";
 import { Layout } from "antd";
 import ErrorBoundary from "./ErrorBoundary";
 import BlockHeader from "./BlockHeader";
 import BlockFooter from "./BlockFooter";
 import {
-	StyledInnerLayout,
 	StyledSider,
-	StyledContent,
 	StyledFormContent,
 	StyledFormLayout,
 } from "./StyledComponents";
 import MainMenu from "./MainMenu";
 import EazyfieldRouter from "./EazyfieldRouter";
+import HelpModal from "./components/HelpModal";
+import { Button } from "@airtable/blocks/ui";
+import viewModel from "./BlockViewModel";
+
+const ShowHelpButton = () => {
+	log.debug("ShowHelpButton.render");
+
+	const onClick = () => {
+		log.debug("ShowHelpButton.onClick");
+
+		viewModel.showHelp = true;
+	};
+
+	return (
+		<Button
+			onClick={onClick}
+			icon="help"
+			style={{ backgroundColor: "transparent" }}
+		/>
+	);
+};
 
 export default function EazyfieldsBlock() {
 	return (
@@ -27,7 +50,9 @@ export default function EazyfieldsBlock() {
 					paddingBottom: 0,
 				}}
 			>
-				<BlockHeader title="Eazyfields" />
+				<BlockHeader title="Eazyfields">
+					<ShowHelpButton />
+				</BlockHeader>
 				<StyledSider theme="light" width="220px">
 					<MainMenu />
 				</StyledSider>
@@ -36,6 +61,7 @@ export default function EazyfieldsBlock() {
 						<EazyfieldRouter />
 					</StyledFormContent>
 				</StyledFormLayout>
+				<HelpModal />
 				<BlockFooter />
 			</Layout>
 		</ErrorBoundary>
