@@ -1,6 +1,6 @@
 import loglevel from "loglevel";
 const log = loglevel.getLogger("TimeField");
-// log.setLevel("debug");
+log.setLevel("debug");
 
 import moment, { Moment } from "moment";
 

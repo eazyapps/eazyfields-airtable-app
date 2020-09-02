@@ -1,6 +1,6 @@
 import loglevel from "loglevel";
 const log = loglevel.getLogger("BoundInput");
-// log.setLevel("debug");
+log.setLevel("debug");
 
 import React from "react";
 
@@ -22,20 +22,28 @@ const BoundInput = observer(
 		model,
 		prop,
 		label,
-		placeholder,
+		validateStatus,
+		help,
 		layout,
 	}: BoundInputProps) => {
 		log.debug("BoundInput.render");
 
-		const handleChange = (e) => {
+		const onChange = (e) => {
 			model[prop] = e.target.value;
 		};
 
 		const value = model[prop];
 
 		return (
-			<StyledFormItem name={name} rules={rules} label={label} {...layout}>
-				<Input value={value} onChange={handleChange} />
+			<StyledFormItem
+				name={name}
+				rules={rules}
+				label={label}
+				validateStatus={validateStatus}
+				help={help}
+				{...layout}
+			>
+				<Input value={value} onChange={onChange} />
 			</StyledFormItem>
 		);
 	}

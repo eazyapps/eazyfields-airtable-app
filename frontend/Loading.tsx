@@ -1,20 +1,12 @@
 import React from "react";
 import { Spin, Typography } from "antd";
+import CenteredContent from "./CenteredContent";
 
 export default function Loading() {
 	return (
-		<main
-			style={{
-				display: "flex",
-				flexDirection: "column",
-				justifyContent: "center",
-				alignItems: "center",
-				width: "100%",
-				height: "calc(100vh - 60px)",
-			}}
-		>
+		<CenteredContent>
 			<Spin />
 			<Typography.Text>Loading english language pack</Typography.Text>
-		</main>
+		</CenteredContent>
 	);
 }

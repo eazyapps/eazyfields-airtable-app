@@ -52,33 +52,35 @@ const HelpModal = observer(() => {
 	};
 
 	return (
-		<Dialog onClose={onClose} width="calc(50vw)">
+		<Dialog onClose={onClose} width="min(400px, 80vw)" maxWidth="80vw">
 			<Dialog.CloseButton />
 			<Heading style={{ marginBottom: "16px" }}>
 				<Icon name="help" size={16} style={{ marginRight: "8px" }} />
 				About Eazyfield
 			</Heading>
-			<Text style={{ marginBottom: "8px" }}>
+			<Text size="large" style={{ marginBottom: "8px" }}>
 				Eazyfields allows you to easily create single select fields with
 				pre-populated options. You can:
 			</Text>
 			<ul style={{ paddingLeft: "20px" }}>
 				<StyledLI>
-					<Text>
+					<Text size="large">
 						Create country, month and day of week fields in any world language.
 					</Text>
 				</StyledLI>
 				<StyledLI>
-					<Text>Create a year field and set the options range.</Text>
+					<Text size="large">
+						Create a year field and set the options range.
+					</Text>
 				</StyledLI>
 				<StyledLI>
-					<Text>
+					<Text size="large">
 						Create a time / time slot field and set the options range and the
 						gap in minutes between the options.
 					</Text>
 				</StyledLI>
 			</ul>
-			<Text>
+			<Text size="large">
 				<a href="https://superblocks.at/" target="_blank">
 					Contact us
 				</a>{" "}

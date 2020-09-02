@@ -11,7 +11,7 @@ const { Text } = Typography;
 import { StyledLogoWrapper, StyledLogoText } from "./StyledComponents";
 
 const log = loglevel.getLogger("BlockFooter");
-// log.setLevel("debug");
+log.setLevel("debug");
 
 const StyledLogo = styled.img`
 	max-height: 12px;

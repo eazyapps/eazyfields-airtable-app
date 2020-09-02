@@ -1,16 +1,14 @@
 import loglevel from "loglevel";
 const log = loglevel.getLogger("MainMenu");
-// log.setLevel("debug");
+log.setLevel("debug");
 
 import React from "react";
 
-import { Typography, Menu } from "antd";
-const { Text } = Typography;
+import { Menu } from "antd";
 
 import styled from "styled-components";
 import { Icon } from "@airtable/blocks/ui";
 
-import { InteractionOutlined } from "@ant-design/icons";
 import { StyledMenuItem } from "./StyledComponents";
 
 import { observer } from "mobx-react-lite";
@@ -53,27 +51,35 @@ const MainMenu = observer(() => {
 			onSelect={onSelect}
 		>
 			<StyledMenuItem
+				disabled={!viewModel.hasPermissions}
 				key={EazyfieldType.country}
 				icon={<StyledIcon name="public" />}
 			>
 				Country
 			</StyledMenuItem>
-			<StyledMenuItem key={EazyfieldType.year} icon={<StyledIcon name="day" />}>
+			<StyledMenuItem
+				disabled={!viewModel.hasPermissions}
+				key={EazyfieldType.year}
+				icon={<StyledIcon name="day" />}
+			>
 				Year
 			</StyledMenuItem>
 			<StyledMenuItem
+				disabled={!viewModel.hasPermissions}
 				key={EazyfieldType.month}
 				icon={<StyledIcon name="day" />}
 			>
 				Month
 			</StyledMenuItem>
 			<StyledMenuItem
+				disabled={!viewModel.hasPermissions}
 				key={EazyfieldType.weekday}
 				icon={<StyledIcon name="day" />}
 			>
 				Day of week
 			</StyledMenuItem>
 			<StyledMenuItem
+				disabled={!viewModel.hasPermissions}
 				key={EazyfieldType.time}
 				icon={<StyledIcon name="time" />}
 			>
@@ -85,61 +91,3 @@ const MainMenu = observer(() => {
 });
 
 export default MainMenu;
-
-// export const FormSettings = observer(() => {
-// 	log.debug(
-// 		"FormSettings.render, activeSettings:",
-// 		editorViewModel.activeSettings.label
-// 	);
-
-// 	const activeSettings = editorViewModel.activeSettings;
-// 	const activeFieldId = editorViewModel.activeFieldId;
-// 	let settingsView = null;
-
-// 	switch (activeSettings.path) {
-// 		case SettingsType.fields.path:
-// 			if (activeFieldId.length > 0) {
-// 				settingsView = <FieldSettingsFactory />;
-// 			} else {
-// 				settingsView = <FieldSettingsList />;
-// 			}
-// 			break;
-// 		case SettingsType.availableFields.path:
-// 			settingsView = <AvailableFields />;
-// 			break;
-// 		case SettingsType.direction.path:
-// 			settingsView = <DirectionSetting />;
-// 			break;
-// 		case SettingsType.logo.path:
-// 			settingsView = <LogoSettings />;
-// 			break;
-// 		case SettingsType.title.path:
-// 			settingsView = <TitleSettings />;
-// 			break;
-// 		case SettingsType.description.path:
-// 			settingsView = <DescriptionSettings />;
-// 			break;
-// 		case SettingsType.labelPosition.path:
-// 			settingsView = <LabelPositionSetting />;
-// 			break;
-// 		case SettingsType.colors.path:
-// 			settingsView = <ColorSettings />;
-// 			break;
-// 		case SettingsType.submitButton.path:
-// 			settingsView = <SubmitButtonSettings />;
-// 			break;
-// 		case SettingsType.thankYouPage.path:
-// 			settingsView = <ThankYouPageSettings />;
-// 			break;
-// 		case SettingsType.home.path:
-// 			settingsView = <MainMenu />;
-// 			break;
-// 	}
-
-// 	return (
-// 		<>
-// 			<Breadcrumbs />
-// 			<StyledSettingsContainer>{settingsView}</StyledSettingsContainer>
-// 		</>
-// 	);
-// });

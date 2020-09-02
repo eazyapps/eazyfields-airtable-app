@@ -1,6 +1,6 @@
 import loglevel from "loglevel";
 const log = loglevel.getLogger("YearField");
-// log.setLevel("debug");
+log.setLevel("debug");
 
 import { observable, computed, decorate } from "mobx";
 

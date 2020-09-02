@@ -1,6 +1,6 @@
 import loglevel from "loglevel";
 const log = loglevel.getLogger("CalendarFieldForm");
-// log.setLevel("debug");
+log.setLevel("debug");
 
 import React from "react";
 

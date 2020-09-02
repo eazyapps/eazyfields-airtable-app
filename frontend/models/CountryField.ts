@@ -1,13 +1,13 @@
 import loglevel from "loglevel";
 const log = loglevel.getLogger("CountryField");
-// log.setLevel("debug");
+log.setLevel("debug");
 
-import chai from "chai";
-const { expect } = chai;
+// import chai from "chai";
+// const { expect } = chai;
 
 import countryList from "country-list";
 
-import { observable, action, computed, decorate } from "mobx";
+import { computed, decorate } from "mobx";
 import * as mobxUtils from "mobx-utils";
 
 import { LanguageIdType, RegionIdType } from "@phensley/cldr";

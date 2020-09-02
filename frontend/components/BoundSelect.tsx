@@ -1,6 +1,6 @@
 import loglevel from "loglevel";
 const log = loglevel.getLogger("BoundSelect");
-// log.setLevel("debug");
+log.setLevel("debug");
 
 import React from "react";
 
@@ -39,7 +39,7 @@ const BoundSelect = observer(
 	}: BoundSelectProps) => {
 		log.debug("BoundSelect.render");
 
-		const handleChange = (value) => {
+		const onChange = (value) => {
 			model[prop] = value;
 		};
 
@@ -62,7 +62,7 @@ const BoundSelect = observer(
 			>
 				<Select
 					defaultValue={defaultValue}
-					onChange={handleChange}
+					onChange={onChange}
 					showSearch={showSearch}
 					filterOption={filterOption}
 				>

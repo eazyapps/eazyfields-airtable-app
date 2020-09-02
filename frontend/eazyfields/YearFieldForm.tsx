@@ -1,6 +1,6 @@
 import loglevel from "loglevel";
 const log = loglevel.getLogger("YearFieldForm");
-// log.setLevel("debug");
+log.setLevel("debug");
 
 import React from "react";
 
@@ -10,6 +10,7 @@ import BoundInputNumber from "../components/BoundInputNumber";
 import EazyfieldForm from "./EazyfieldForm";
 import YearField from "../models/YearField";
 import { Rule } from "antd/lib/form";
+import { Divider } from "antd";
 
 const YearFieldForm = observer(({ field }: { field: YearField }) => {
 	log.debug(
@@ -41,6 +42,10 @@ const YearFieldForm = observer(({ field }: { field: YearField }) => {
 		if (field.firstYear >= field.lastYear) {
 			extraLastYearProps.validateStatus = "error";
 			extraLastYearProps.help = "Last year needs to be bigger than first";
+		} else if (field.lastYear > field.firstYear + 200) {
+			extraLastYearProps.validateStatus = "warning";
+			extraLastYearProps.help =
+				"The selection range will generate more than 200 options and may crash the block.";
 		}
 	}
 
@@ -54,19 +59,41 @@ const YearFieldForm = observer(({ field }: { field: YearField }) => {
 			previewPlaceholder="No valid year range"
 			hideLanguageSelection={true}
 		>
+			<Divider
+				style={{
+					fontSize: "14px",
+					fontWeight: "normal",
+					marginTop: "8px",
+					marginBottom: "8px",
+				}}
+			>
+				Selection range
+			</Divider>
 			<BoundInputNumber
+				style={{
+					display: "inline-block",
+					width: "50%",
+					paddingRight: "6px",
+				}}
+				inputStyle={{ width: "100%" }}
 				name="firstYear"
 				value={field.firstYear}
 				rules={firstYearRules}
-				label="First year in selection range"
+				label="First year"
 				model={field}
 				prop="firstYear"
 			/>
 			<BoundInputNumber
+				style={{
+					display: "inline-block",
+					width: "50%",
+					paddingLeft: "6px",
+				}}
+				inputStyle={{ width: "100%" }}
 				name="lastYear"
 				value={field.lastYear}
 				rules={lastYearRules}
-				label="Last year in selection range"
+				label="Last year"
 				model={field}
 				prop="lastYear"
 				{...extraLastYearProps}

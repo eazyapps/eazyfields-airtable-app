@@ -1,6 +1,6 @@
 import loglevel from "loglevel";
 const log = loglevel.getLogger("CalendarField");
-// log.setLevel("debug");
+log.setLevel("debug");
 
 import chai from "chai";
 const { expect } = chai;

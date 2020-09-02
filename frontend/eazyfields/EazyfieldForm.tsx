@@ -1,6 +1,6 @@
 import loglevel from "loglevel";
 const log = loglevel.getLogger("EazyfieldForm");
-// log.setLevel("debug");
+log.setLevel("debug");
 
 import React, { useState } from "react";
 
@@ -9,28 +9,26 @@ import { observer } from "mobx-react-lite";
 import { Form, Select } from "antd";
 const { Option } = Select;
 
-import { colorUtils, colors } from "@airtable/blocks/ui";
-const blueBright = colorUtils.getHexForColor(colors.BLUE_BRIGHT);
-
 import { StyledFormItem, StyledSubmitButton } from "../StyledComponents";
 
 import BoundSelect from "../components/BoundSelect";
 import TableSelector from "../components/TableSelector";
 import BoundInput from "../components/BoundInput";
 import languagePackStore from "../models/LanguagePackStore";
-import Eazyfield, { SubmitStatus } from "../models/Eazyfield";
+import Eazyfield from "../models/Eazyfield";
 
 const EazyfieldForm = observer(
 	({
 		field,
 		formValues,
-		previewValue,
+		disableSubmits,
 		previewPlaceholder,
 		children,
 		hideLanguageSelection,
 	}: {
 		field: Eazyfield;
-		formValues: any;
+		formValues?: any;
+		disableSubmits?: boolean;
 		previewValue?: string | number;
 		previewPlaceholder?: string;
 		children?: any;
@@ -46,38 +44,48 @@ const EazyfieldForm = observer(
 			throw error;
 		}
 
-		form.setFieldsValue(formValues);
+		// form.setFieldsValue(formValues);
 
-		const onFinish = (values) => {
+		const onSubmit = async () => {
 			try {
-				log.debug("EazyfieldForm.onFinish, values:", values);
-				field.create(values);
+				log.debug("EazyfieldForm.onSubmit");
+				await field.create();
 			} catch (e) {
 				log.error("EazyfieldForm.onFinish, error:", e);
 				setError(e);
 			}
 		};
 
-		const onFinishFailed = (errorInfo) => {
-			log.debug("EazyfieldForm.onFinishFailed, errorInfo:", errorInfo);
-		};
+		// const onFinish = (values) => {
+		// 	try {
+		// 		log.debug("EazyfieldForm.onFinish, values:", values);
+		// 		field.create();
+		// 	} catch (e) {
+		// 		log.error("EazyfieldForm.onFinish, error:", e);
+		// 		setError(e);
+		// 	}
+		// };
+
+		// const onFinishFailed = (errorInfo) => {
+		// 	log.debug("EazyfieldForm.onFinishFailed, errorInfo:", errorInfo);
+		// };
 
 		const onValuesChange = (changedValues, allValues) => {
 			log.debug("EazyfieldForm.onValuesChange, changedValues:", changedValues);
 			field.onValuesChange(changedValues, allValues);
 		};
 
-		const validateUniqueName = (rule, value) => {
-			log.debug("EazyfieldForm.validateUniqueName, value:", value);
-			if (!value || !field.table) {
-				return Promise.resolve();
-			}
-			const existingField = field.table.getFieldByNameIfExists(value);
-			if (existingField) {
-				return Promise.reject(`The ${value} field already exists`);
-			}
-			return Promise.resolve();
-		};
+		// const validateUniqueName = (rule, value) => {
+		// 	log.debug("EazyfieldForm.validateUniqueName, value:", value);
+		// 	if (!value || !field.table) {
+		// 		return Promise.resolve();
+		// 	}
+		// 	const existingField = field.table.getFieldByNameIfExists(value);
+		// 	if (existingField) {
+		// 		return Promise.reject(`The ${value} field already exists`);
+		// 	}
+		// 	return Promise.resolve();
+		// };
 
 		const filterLanguageOption = (
 			inputValue: string,
@@ -87,29 +95,24 @@ const EazyfieldForm = observer(
 			return option.name.toLowerCase().startsWith(inputValue.toLowerCase());
 		};
 
+		// <Form
+		// 	form={form}
+		// 	layout="vertical"
+		// 	onValuesChange={onValuesChange}
+		// 	// onFinish={onFinish}
+		// 	// onFinishFailed={onFinishFailed}
+		// >
 		return (
-			<Form
-				form={form}
-				layout="vertical"
-				onValuesChange={onValuesChange}
-				onFinish={onFinish}
-				onFinishFailed={onFinishFailed}
-			>
+			<>
 				<TableSelector field={field} />
 				<BoundInput
 					name="name"
-					rules={[
-						{
-							required: true,
-							message: "Please enter a field name",
-						},
-						{
-							validator: validateUniqueName,
-						},
-					]}
 					label="Unique name for field"
 					model={field}
 					prop="name"
+					rules={field.nameRules}
+					validateStatus={field.fieldNameStatus}
+					help={field.fieldNameStatusMessage}
 				/>
 				{hideLanguageSelection !== true ? (
 					<BoundSelect
@@ -124,7 +127,11 @@ const EazyfieldForm = observer(
 					/>
 				) : null}
 				{children}
-				<StyledFormItem label="Preview of field values">
+				<StyledFormItem
+					label="Preview of field values"
+					labelCol={{ span: 24 }}
+					wrapperCol={{ span: 24 }}
+				>
 					{field.options.length > 0 ? (
 						<Select value={field.options[0].value}>
 							{field.options.map((option) => (
@@ -153,15 +160,26 @@ const EazyfieldForm = observer(
 						htmlType="submit"
 						loading={field.isCreating}
 						justified="true"
-						disabled={field.options.length == 0 ? true : undefined}
-						style={{ backgroundColor: blueBright }}
+						onClick={onSubmit}
+						// disabled={field.disableCreateButton}
+						disabled={
+							disableSubmits != null
+								? disableSubmits
+								: field.disableCreateButton
+						}
+						// style={
+						// 	field.disableCreateButton
+						// 		? undefined
+						// 		: { backgroundColor: blueBright }
+						// }
 					>
 						Create field
 					</StyledSubmitButton>
 				</StyledFormItem>
-			</Form>
+			</>
 		);
 	}
+	//			</Form>
 );
 
 export default EazyfieldForm;

@@ -1,4 +1,5 @@
 import { Moment } from "moment";
+import { ValidateStatus } from "../models/Eazyfield";
 
 export interface ColLayout {
 	span: number;
@@ -30,6 +31,7 @@ export interface ResponsiveFormItemLayout {
 }
 
 export interface BoundComponentProps {
+	style?: React.CSSProperties;
 	name?: string;
 	rules?: any;
 	model: object;
@@ -41,6 +43,6 @@ export interface BoundComponentProps {
 	disabled?: boolean;
 	onChange?: Function;
 	value?: number | string | Moment;
-	validateStatus?: "error";
+	validateStatus?: ValidateStatus;
 	help?: string;
 }

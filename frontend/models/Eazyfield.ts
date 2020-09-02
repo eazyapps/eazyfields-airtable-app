@@ -1,16 +1,15 @@
 import loglevel from "loglevel";
 const log = loglevel.getLogger("Eazyfield");
-// log.setLevel("debug");
+log.setLevel("debug");
 
-import chai from "chai";
-const { expect } = chai;
+// import chai from "chai";
+// const { expect } = chai;
 
-import { observable, action, computed, decorate, toJS } from "mobx";
+import { observable, action, computed, decorate, toJS, flow } from "mobx";
 
 import { LanguageIdType } from "@phensley/cldr";
 import { base, cursor } from "@airtable/blocks";
-import { Table, Field, FieldType } from "@airtable/blocks/models";
-import { fromPromise, IPromiseBasedObservable } from "mobx-utils";
+import { Table, FieldType } from "@airtable/blocks/models";
 
 import languagePackStore from "./LanguagePackStore";
 
@@ -25,8 +24,8 @@ export enum EazyfieldType {
 	time = "time",
 }
 
-export enum SubmitStatus {
-	// We use antd form validationStatus warning, since it has a more appropiate color
+export enum ValidateStatus {
+	// We use antd form validationStatus warning, since it has a more appropriate color
 	success = "success",
 	error = "error",
 }
@@ -42,25 +41,49 @@ export interface Option extends Choice {
 export default abstract class Eazyfield {
 	_table: Table;
 	activeTableId: string;
+	activeTable: Table;
+	_oldTable: Table;
 	name: string;
+	// A dummy obserable that is incremented by 1 every time there are field changes.
+	recheckNameExists: number;
 	type: FieldType;
 	optionsByLanguage: Map<LanguageIdType, Option[]>;
 	language: LanguageIdType;
-	creator: IPromiseBasedObservable<Field> | null;
-	createError: Error | null;
+	isCreating: boolean;
+	submitStatus: ValidateStatus;
 
 	constructor(language: LanguageIdType, defaultName: string) {
-		log.debug("CountryField.constructor, language:", language);
+		log.debug("Eazyfield.constructor, language:", language);
+
 		this._table = null;
-		this.activeTableId = cursor.activeTableId;
-		this.name = defaultName;
+		this._oldTable = null;
+		this.recheckNameExists = 1;
 		this.type = FieldType.SINGLE_SELECT;
 		this.optionsByLanguage = new Map();
 		this.language = language;
-		this.creator = null;
-		this.createError = null;
+		this.isCreating = false;
+		this.activeTableId = cursor.activeTableId;
+		if (this.activeTableId) {
+			this.activeTable = base.getTableByIdIfExists(this.activeTableId);
+		}
 
+		// That does the initialization properly, no need to duplicate code.
+		// this.onActiveTableIdChange();
+		this.name = this.getAvailableFieldName(defaultName);
 		cursor.watch(["activeTableId"], this.onActiveTableIdChange);
+	}
+
+	getAvailableFieldName(defaultName): string {
+		if (!this.table || !this.table.getFieldByNameIfExists(defaultName)) {
+			return defaultName;
+		}
+		for (let i = 2; i < 100; i++) {
+			const name = `${defaultName}${i}`;
+			if (!this.table.getFieldByNameIfExists(name)) {
+				return name;
+			}
+		}
+		return defaultName;
 	}
 
 	get formValues(): any {
@@ -94,6 +117,19 @@ export default abstract class Eazyfield {
 	onActiveTableIdChange(): void {
 		log.debug("Eazyfield.onActiveTableIdChange");
 		this.activeTableId = cursor.activeTableId;
+		if (this.activeTableId) {
+			this.activeTable = base.getTableByIdIfExists(this.activeTableId);
+			if (!this.activeTable) {
+				log.debug(
+					"Eazyfield.onActiveTableIdChange - base doesn't return activeTable yet, setting timeout"
+				);
+				setTimeout(this.onActiveTableIdChange, 300);
+			}
+		}
+	}
+
+	onSelectedTableDeleted(): void {
+		log.debug("Eazyfield.onSelectedTableDeleted");
 	}
 
 	get table(): Table {
@@ -101,63 +137,126 @@ export default abstract class Eazyfield {
 		if (this._table) {
 			return this._table;
 		}
-		if (this.activeTableId) {
-			const table = base.getTableById(cursor.activeTableId);
-			log.debug("Eazyfield.table get, activeTable:", table.name);
-			return table;
+		return this.activeTable;
+	}
+
+	// set table(table: Table) {
+	// 	log.debug("Eazyfield.table set");
+
+	// 	this._table = table;
+	// }
+
+	get nameRules(): any {
+		if (this.isCreating || this.submitStatus) {
+			return null;
+		}
+		return [
+			{
+				required: true,
+				message: "Please enter a field name",
+			},
+		];
+	}
+
+	get hasPermission(): boolean {
+		if (this.table) {
+			return this.table.hasPermissionToCreateField();
+		}
+		return true;
+	}
+
+	get fieldNameExists(): boolean {
+		log.debug("Eazyfield.fieldNameExists");
+
+		if (this.isCreating || this.submitStatus) return false;
+
+		if (
+			this.recheckNameExists > 0 &&
+			this.table &&
+			this.name &&
+			this.table.getFieldByNameIfExists(this.name) != null
+		) {
+			return true;
+		}
+		return false;
+	}
+
+	get disableCreateButton(): boolean {
+		if (
+			this.submitStatus ||
+			!this.hasPermission ||
+			!this.table ||
+			!this.name ||
+			this.fieldNameExists ||
+			this.options.length === 0
+		) {
+			return true;
+		}
+		return false;
+	}
+
+	create = flow(function* () {
+		try {
+			this.isCreating = true;
+			const name = toJS(this.name);
+			const type = toJS(this.type);
+			const choices = this.options.map((choice) => {
+				return { name: choice.name };
+			});
+			const options = { choices: choices };
+			log.debug(
+				"Eazyfield.create, name: ",
+				name,
+				", type:",
+				type,
+				", options: ",
+				options
+			);
+			this._table = this.table;
+
+			yield this._table.createFieldAsync(name, type, options);
+			this.submitStatus = ValidateStatus.success;
+		} catch (e) {
+			log.error("Eazyfield.create, error:", e);
+			this.submitStatus = ValidateStatus.error;
+			this.createError = e;
+		} finally {
+			this.isCreating = false;
+		}
+	});
+
+	get tableStatus(): ValidateStatus {
+		if (this.isCreating) return null;
+
+		if (!this.hasPermission) {
+			return ValidateStatus.error;
 		}
 		return null;
 	}
 
-	set table(table: Table) {
-		this._table = table;
-	}
+	get tableStatusMessage(): string | null {
+		if (this.isCreating) return null;
 
-	create(values): IPromiseBasedObservable<Field> {
-		const name = toJS(this.name);
-		const type = toJS(this.type);
-		const choices = this.options.map((choice) => {
-			return { name: choice.name };
-		});
-		const options = { choices: choices };
-		log.debug(
-			"Eazyfield.create, name: ",
-			name,
-			", type:",
-			type,
-			", options: ",
-			options
-		);
-		this._table = this.table;
-		this.creator = fromPromise(
-			this._table.createFieldAsync(name, type, options)
-		);
-		this.creator.then(
-			() => {},
-			(rejectReason: any) => {
-				log.error("Eazyfield.onCreateError, error:", rejectReason);
-				this.createError = rejectReason;
-			}
-		);
-		return this.creator;
-	}
-
-	get isCreating(): boolean {
-		const value: boolean =
-			this.creator != null && this.creator.state == "pending";
-		log.debug("Eazyfield.isCreating:", value);
-		return value;
-	}
-
-	get submitStatus(): SubmitStatus {
-		if (!this.creator) {
-			return null;
+		if (!this.hasPermission) {
+			return "You don't have permissions to create fields in this table.";
 		}
-		switch (this.creator.state) {
-			case "fulfilled":
-				return SubmitStatus.success;
-			case "rejected":
-				return SubmitStatus.error;
+		return null;
+	}
+
+	get fieldNameStatus(): ValidateStatus {
+		if (this.isCreating || this.submitStatus) return null;
+
+		if (this.fieldNameExists) {
+			return ValidateStatus.error;
+		}
+		return null;
+	}
+
+	get fieldNameStatusMessage(): string | null {
+		if (this.isCreating || this.submitStatus) return null;
+
+		if (this.fieldNameExists) {
+			return `The "${this.name}" field already exists`;
 		}
 		return null;
 	}
@@ -167,9 +266,9 @@ export default abstract class Eazyfield {
 			return null;
 		}
 		switch (this.submitStatus) {
-			case SubmitStatus.success:
-				return `Successfully created the "${this.name}" field in the "${this._table.name}" table`;
-			case SubmitStatus.error:
+			case ValidateStatus.success:
+				return `Successfully created the "${this.name}" field in the "${this.table.name}" table`;
+			case ValidateStatus.error:
 				return `Something went wrong. Please try again. If the problem persists, please contact support@superblocks.at`;
 			default:
 				return null;
@@ -177,36 +276,46 @@ export default abstract class Eazyfield {
 	}
 
 	// Reset so that we don't see the submit status message
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	onValuesChange(changedValues, allValues): void {
-		if (this.submitStatus != null) {
-			this.creator = null;
-			this.createError = null;
-		}
+		this.submitStatus = null;
 	}
 
 	reset(): void {
 		this._table = null;
-		this.creator = null;
-		this.createError = null;
+		this.submitStatus = null;
 	}
 }
 
 // @ts-ignore
 decorate(Eazyfield, {
-	_table: observable,
+	_table: observable.ref,
 	table: computed,
+	onTableFieldsChanged: action.bound,
+	tableChangedReaction: action.bound,
+	_oldTable: observable.ref,
 	activeTableId: observable,
+	activeTable: observable.ref,
+	hasPermission: computed,
 	name: observable,
+	nameRules: computed,
+	fieldNameExists: computed,
+	recheckNameExists: observable,
 	type: observable,
 	options: computed,
+	disableCreateButton: computed,
 	language: observable,
-	isCreating: computed,
-	creator: observable,
+	tableStatus: computed,
+	tableStatusMessage: computed,
+	fieldNameStatus: computed,
+	fieldNameStatusMessage: computed,
+	isCreating: observable,
 	createError: observable,
-	submitStatus: computed,
+	submitStatus: observable,
 	submitStatusMessage: computed,
 	onValuesChange: action,
 	onActiveTableIdChange: action.bound,
+	onSelectedTableDeleted: action.bound,
 	formValues: computed,
 	reset: action,
 });

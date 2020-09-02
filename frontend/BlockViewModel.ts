@@ -1,13 +1,13 @@
 import log from "loglevel";
 
-import { observable, decorate, autorun, computed } from "mobx";
+import { observable, decorate, autorun } from "mobx";
 
 import Eazyfield, { EazyfieldType } from "./models/Eazyfield";
 import CountryField from "./models/CountryField";
 import CalendarField from "./models/CalendarField";
 import YearField from "./models/YearField";
 import TimeField from "./models/TimeField";
-import { globalConfig } from "@airtable/blocks";
+import { base, globalConfig } from "@airtable/blocks";
 import { LanguageIdType } from "@phensley/cldr";
 
 export { EazyfieldType } from "./models/Eazyfield";
@@ -17,9 +17,15 @@ export class BlockViewModel {
 	activeEazyfieldType: EazyfieldType;
 	activeLanguageSaver: null | Function;
 	showHelp: boolean;
+	hasPermissions: boolean;
 
 	constructor() {
 		log.debug("BlockViewModel.constructor");
+		this.hasPermissions = base.hasPermissionToCreateTable();
+		if (!this.hasPermissions) {
+			this.showHelp = false;
+			return;
+		}
 		this._fields = new Map();
 		this.activeEazyfieldType = EazyfieldType.country;
 		this.activeLanguageSaver = null;
@@ -36,8 +42,9 @@ export class BlockViewModel {
 		if (!field) {
 			field = this.createField(this.activeEazyfieldType);
 			this._fields.set(this.activeEazyfieldType, field);
+		} else {
+			field.reset();
 		}
-		field.reset();
 
 		const activeLanguage = globalConfig.get([
 			"config",
@@ -71,7 +78,7 @@ export class BlockViewModel {
 
 decorate(BlockViewModel, {
 	activeEazyfieldType: observable,
-	activeField: computed,
+	// activeField: computed,
 	showHelp: observable,
 });
 

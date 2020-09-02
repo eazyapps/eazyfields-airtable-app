@@ -1,6 +1,6 @@
 import loglevel from "loglevel";
 const log = loglevel.getLogger("EazyfieldRouter");
-// log.setLevel("debug");
+log.setLevel("debug");
 
 import React from "react";
 
@@ -17,12 +17,25 @@ import YearFieldForm from "./eazyfields/YearFieldForm";
 import YearField from "./models/YearField";
 import TimeFieldForm from "./eazyfields/TimeFieldForm";
 import TimeField from "./models/TimeField";
+import { Text, Box, Icon } from "@airtable/blocks/ui";
 
 const EazyfieldRouter = observer(() => {
 	log.debug(
 		"EazyfieldRouter.render, activeEazyfieldType",
 		viewModel.activeEazyfieldType
 	);
+
+	if (!viewModel.hasPermissions) {
+		return (
+			<Box padding={2}>
+				<Icon name="warning" size={20} />
+				<Text size="large" marginLeft={1} style={{ display: "inline" }}>
+					We're sorry, you don't have the required permissions to create fields
+					in this base.
+				</Text>
+			</Box>
+		);
+	}
 
 	if (languagePackStore.supportedLanguages.length == 0) {
 		return <Loading />;

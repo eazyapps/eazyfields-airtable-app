@@ -17,6 +17,7 @@ import EazyfieldRouter from "./EazyfieldRouter";
 import HelpModal from "./components/HelpModal";
 import { Button } from "@airtable/blocks/ui";
 import viewModel from "./BlockViewModel";
+import BaseTracker from "./BaseTracker";
 
 const ShowHelpButton = () => {
 	log.debug("ShowHelpButton.render");
@@ -58,6 +59,7 @@ export default function EazyfieldsBlock() {
 				</StyledSider>
 				<StyledFormLayout>
 					<StyledFormContent>
+						<BaseTracker />
 						<EazyfieldRouter />
 					</StyledFormContent>
 				</StyledFormLayout>

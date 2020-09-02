@@ -1,8 +1,6 @@
 import loglevel from "loglevel";
 const log = loglevel.getLogger("TimeFieldForm");
-// log.setLevel("debug");
-
-import { Moment } from "moment";
+log.setLevel("debug");
 
 import React from "react";
 
@@ -34,7 +32,7 @@ const TimeFieldForm = observer(({ field }: { field: TimeField }) => {
 	return (
 		<EazyfieldForm
 			field={field}
-			formValues={field.timeFieldFormValues}
+			// formValues={field.timeFieldFormValues}
 			previewValue={
 				field.options.length > 0 ? field.options[0].value : undefined
 			}
@@ -42,6 +40,11 @@ const TimeFieldForm = observer(({ field }: { field: TimeField }) => {
 			hideLanguageSelection={true}
 		>
 			<BoundTimePicker
+				style={{
+					display: "inline-block",
+					width: "50%",
+					paddingRight: "6px",
+				}}
 				name="startTime"
 				value={field.startTime}
 				rules={[
@@ -55,6 +58,11 @@ const TimeFieldForm = observer(({ field }: { field: TimeField }) => {
 				prop="startTime"
 			/>
 			<BoundTimePicker
+				style={{
+					display: "inline-block",
+					width: "50%",
+					paddingLeft: "6px",
+				}}
 				name="endTime"
 				value={field.startTime}
 				rules={[

@@ -264,7 +264,28 @@ export interface StyledFormItemProps {
 // const green = colorUtils.getHexForColor(colors.GREEN);
 
 export const StyledFormItem = styled(Form.Item)<StyledFormItemProps>`
-	margin-bottom: 8px;
+	/* margin-bottom: 8px; */
+
+	button {
+		background-color: rgb(45, 127, 249);
+		color: white;
+	}
+
+	&& button:disabled {
+		background-color: rgb(45, 127, 249);
+		color: white;
+		opacity: 0.5;
+	}
+
+	&& button::hover {
+		background-color: rgb(45, 127, 249);
+		color: white;
+		opacity: 0.75;
+	}
+
+	button, input, .ant-select {
+		border-radius: 3px;
+	}
 
 	&& label:after {
 		display: inherit;
