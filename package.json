@@ -2,7 +2,7 @@
 	"dependencies": {
 		"@airtable/blocks": "0.0.55",
 		"@phensley/cldr": "^1.2.1",
-		"antd": "^4.6.2",
+		"antd": "4.6.2",
 		"bent": "^7.3.5",
 		"chai": "^4.2.0",
 		"country-list": "^2.2.0",
