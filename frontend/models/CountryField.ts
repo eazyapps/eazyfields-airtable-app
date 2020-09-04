@@ -1,6 +1,6 @@
 import loglevel from "loglevel";
 const log = loglevel.getLogger("CountryField");
-log.setLevel("debug");
+// log.setLevel("debug");
 
 // import chai from "chai";
 // const { expect } = chai;
@@ -23,6 +23,8 @@ export default class CountryField extends Eazyfield {
 	countryCodes: [];
 
 	constructor(language: LanguageIdType) {
+		log.debug("CountryField.constructor");
+
 		super(language, "Country");
 		this.countryCodes = countryList.getCodes();
 	}

@@ -1,11 +1,19 @@
 import loglevel from "loglevel";
 const log = loglevel.getLogger("Eazyfield");
-log.setLevel("debug");
+// log.setLevel("debug");
 
 // import chai from "chai";
 // const { expect } = chai;
 
-import { observable, action, computed, decorate, toJS, flow } from "mobx";
+import {
+	observable,
+	action,
+	computed,
+	decorate,
+	toJS,
+	flow,
+	reaction,
+} from "mobx";
 
 import { LanguageIdType } from "@phensley/cldr";
 import { base, cursor } from "@airtable/blocks";
@@ -44,21 +52,29 @@ export default abstract class Eazyfield {
 	activeTable: Table;
 	_oldTable: Table;
 	name: string;
+	defaultName: string;
 	// A dummy obserable that is incremented by 1 every time there are field changes.
 	recheckNameExists: number;
 	type: FieldType;
 	optionsByLanguage: Map<LanguageIdType, Option[]>;
 	language: LanguageIdType;
+	getFormFieldsFunc: Function;
 	isCreating: boolean;
 	submitStatus: ValidateStatus;
 
-	constructor(language: LanguageIdType, defaultName: string) {
+	constructor(
+		language: LanguageIdType,
+		defaultName: string,
+		getFormFieldsFunc: Function = null
+	) {
 		log.debug("Eazyfield.constructor, language:", language);
 
 		this._table = null;
 		this._oldTable = null;
+		this.defaultName = defaultName;
 		this.recheckNameExists = 1;
 		this.type = FieldType.SINGLE_SELECT;
+		this.getFormFieldsFunc = getFormFieldsFunc;
 		this.optionsByLanguage = new Map();
 		this.language = language;
 		this.isCreating = false;
@@ -71,6 +87,20 @@ export default abstract class Eazyfield {
 		// this.onActiveTableIdChange();
 		this.name = this.getAvailableFieldName(defaultName);
 		cursor.watch(["activeTableId"], this.onActiveTableIdChange);
+		reaction(
+			() => {
+				return {
+					table: this.table,
+					name: this.name,
+					language: this.language,
+					childFields: this.getFormFieldsFunc ? this.getFormFieldsFunc() : null,
+				};
+			},
+			() => {
+				log.debug("Eazyfield.formFieldsChangedReaction");
+				this.submitStatus = null;
+			}
+		);
 	}
 
 	getAvailableFieldName(defaultName): string {
@@ -84,16 +114,6 @@ export default abstract class Eazyfield {
 			}
 		}
 		return defaultName;
-	}
-
-	get formValues(): any {
-		log.debug("Eazyfield.formValues");
-
-		return {
-			table: this.table ? this.table.id : null,
-			name: this.name,
-			language: this.language,
-		};
 	}
 
 	get options(): Option[] {
@@ -133,18 +153,21 @@ export default abstract class Eazyfield {
 	}
 
 	get table(): Table {
-		log.debug("Eazyfield.table get");
-		if (this._table) {
+		log.debug(
+			"Eazyfield.table get, _table:",
+			this._table ? this._table.name : "null"
+		);
+		if (this._table != null) {
 			return this._table;
 		}
 		return this.activeTable;
 	}
 
-	// set table(table: Table) {
-	// 	log.debug("Eazyfield.table set");
+	set table(table: Table) {
+		log.debug("Eazyfield.table set, table:", table ? table.name : "null");
 
-	// 	this._table = table;
-	// }
+		this._table = table;
+	}
 
 	get nameRules(): any {
 		if (this.isCreating || this.submitStatus) {
@@ -182,6 +205,8 @@ export default abstract class Eazyfield {
 	}
 
 	get disableCreateButton(): boolean {
+		log.debug("Eazyfield.disableCreateButton");
+
 		if (
 			this.submitStatus ||
 			!this.hasPermission ||
@@ -196,6 +221,7 @@ export default abstract class Eazyfield {
 	}
 
 	create = flow(function* () {
+		log.debug("Eazyfield.create");
 		try {
 			this.isCreating = true;
 			const name = toJS(this.name);
@@ -226,6 +252,8 @@ export default abstract class Eazyfield {
 	});
 
 	get tableStatus(): ValidateStatus {
+		log.debug("Eazyfield.tableStatus");
+
 		if (this.isCreating) return null;
 
 		if (!this.hasPermission) {
@@ -235,6 +263,8 @@ export default abstract class Eazyfield {
 	}
 
 	get tableStatusMessage(): string | null {
+		log.debug("Eazyfield.tableStatusMessage");
+
 		if (this.isCreating) return null;
 
 		if (!this.hasPermission) {
@@ -244,6 +274,8 @@ export default abstract class Eazyfield {
 	}
 
 	get fieldNameStatus(): ValidateStatus {
+		log.debug("Eazyfield.fieldNameStatus");
+
 		if (this.isCreating || this.submitStatus) return null;
 
 		if (this.fieldNameExists) {
@@ -282,8 +314,11 @@ export default abstract class Eazyfield {
 	}
 
 	reset(): void {
-		this._table = null;
+		log.debug("Eazyfield.reset");
+
+		// this._table = null;
 		this.submitStatus = null;
+		this.name = this.getAvailableFieldName(this.defaultName);
 	}
 }
 
@@ -316,6 +351,5 @@ decorate(Eazyfield, {
 	onValuesChange: action,
 	onActiveTableIdChange: action.bound,
 	onSelectedTableDeleted: action.bound,
-	formValues: computed,
-	reset: action,
+	reset: action.bound,
 });

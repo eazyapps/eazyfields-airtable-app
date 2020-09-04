@@ -1,6 +1,6 @@
 import loglevel from "loglevel";
 const log = loglevel.getLogger("TimeFieldForm");
-log.setLevel("debug");
+// log.setLevel("debug");
 
 import React from "react";
 
@@ -10,6 +10,7 @@ import BoundTimePicker from "../components/BoundTimePicker";
 import EazyfieldForm from "./EazyfieldForm";
 import TimeField from "../models/TimeField";
 import BoundInputNumber from "../components/BoundInputNumber";
+import FormItem from "../components/FormItem";
 
 const TimeFieldForm = observer(({ field }: { field: TimeField }) => {
 	// We need to access the fields so mobx knows to call this component whenever they change
@@ -32,7 +33,6 @@ const TimeFieldForm = observer(({ field }: { field: TimeField }) => {
 	return (
 		<EazyfieldForm
 			field={field}
-			// formValues={field.timeFieldFormValues}
 			previewValue={
 				field.options.length > 0 ? field.options[0].value : undefined
 			}
@@ -64,7 +64,7 @@ const TimeFieldForm = observer(({ field }: { field: TimeField }) => {
 					paddingLeft: "6px",
 				}}
 				name="endTime"
-				value={field.startTime}
+				value={field.endTime}
 				rules={[
 					{
 						required: true,
@@ -88,6 +88,7 @@ const TimeFieldForm = observer(({ field }: { field: TimeField }) => {
 				label="Gap between values, in minutes"
 				model={field}
 				prop="gap"
+				layout={FormItem.getLayoutProps(24)}
 			/>
 		</EazyfieldForm>
 	);

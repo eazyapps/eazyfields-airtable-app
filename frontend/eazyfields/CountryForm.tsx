@@ -1,6 +1,6 @@
 import loglevel from "loglevel";
 const log = loglevel.getLogger("CountryForm");
-log.setLevel("debug");
+// log.setLevel("debug");
 
 import React from "react";
 
@@ -12,7 +12,7 @@ import EazyfieldForm from "./EazyfieldForm";
 const CountryForm = observer(({ field }: { field: Eazyfield }) => {
 	log.debug("Country.render");
 
-	return <EazyfieldForm field={field} formValues={field.formValues} />;
+	return <EazyfieldForm field={field} />;
 });
 
 export default CountryForm;

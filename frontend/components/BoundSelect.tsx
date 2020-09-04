@@ -1,6 +1,6 @@
 import loglevel from "loglevel";
 const log = loglevel.getLogger("BoundSelect");
-log.setLevel("debug");
+// log.setLevel("debug");
 
 import React from "react";
 
@@ -11,6 +11,7 @@ import { observer } from "mobx-react-lite";
 
 import { BoundComponentProps } from "./BoundComponent";
 import { StyledFormItem } from "../StyledComponents";
+import { runInAction, toJS } from "mobx";
 
 export interface OptionProps {
 	value: number | string;
@@ -37,10 +38,16 @@ const BoundSelect = observer(
 		showSearch = false,
 		filterOption = true,
 	}: BoundSelectProps) => {
-		log.debug("BoundSelect.render");
+		log.debug("BoundSelect.render, prop:", prop);
 
-		const onChange = (value) => {
-			model[prop] = value;
+		const onSelect = (value) => {
+			log.debug("BoundSelect.onSelect, value:", value, ", model:", toJS(model));
+
+			runInAction(() => {
+				model[prop] = value;
+			});
+
+			log.debug("BoundSelect.onSelect, model[prop]:", model[prop]);
 		};
 
 		const value = model[prop];
@@ -54,15 +61,15 @@ const BoundSelect = observer(
 
 		return (
 			<StyledFormItem
-				name={name}
-				rules={rules}
+				// name={name}
+				// rules={rules}
 				label={label}
 				{...layout}
 				{...additionalProps}
 			>
 				<Select
-					defaultValue={defaultValue}
-					onChange={onChange}
+					value={value}
+					onSelect={onSelect}
 					showSearch={showSearch}
 					filterOption={filterOption}
 				>

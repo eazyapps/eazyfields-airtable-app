@@ -1,11 +1,11 @@
 import loglevel from "loglevel";
 const log = loglevel.getLogger("CalendarField");
-log.setLevel("debug");
+// log.setLevel("debug");
 
-import chai from "chai";
-const { expect } = chai;
+// import chai from "chai";
+// const { expect } = chai;
 
-import { observable, action, computed, decorate } from "mobx";
+import { observable, computed, decorate } from "mobx";
 
 import { LanguageIdType, FieldWidthType } from "@phensley/cldr";
 import languagePackStore from "./LanguagePackStore";
@@ -18,18 +18,15 @@ export default class CalendarField extends Eazyfield {
 	eazyfieldType: EazyfieldType;
 
 	constructor(language: LanguageIdType, eazyfieldType: EazyfieldType) {
-		super(language, eazyfieldType == EazyfieldType.month ? "Month" : "Day");
+		super(
+			language,
+			eazyfieldType == EazyfieldType.month ? "Month" : "Day",
+			() => {
+				return this.width;
+			}
+		);
 		this.width = "wide";
 		this.eazyfieldType = eazyfieldType;
-	}
-
-	get calendarFieldFormValues(): any {
-		log.debug("CalendarField.calendarFieldFormValues");
-
-		return {
-			width: this.width,
-			...this.formValues,
-		};
 	}
 
 	get widthOptions(): Option[] {
@@ -93,5 +90,4 @@ decorate(CalendarField, {
 	width: observable,
 	options: computed,
 	widthOptions: computed,
-	calendarFieldFormValues: computed,
 });

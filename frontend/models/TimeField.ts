@@ -1,6 +1,6 @@
 import loglevel from "loglevel";
 const log = loglevel.getLogger("TimeField");
-log.setLevel("debug");
+// log.setLevel("debug");
 
 import moment, { Moment } from "moment";
 
@@ -17,21 +17,16 @@ export default class TimeField extends Eazyfield {
 	gap: number;
 
 	constructor(language: LanguageIdType) {
-		super(language, "Time");
+		super(language, "Time", () => {
+			return {
+				startTime: this.startTime,
+				endTime: this.endTime,
+				gap: this.gap,
+			};
+		});
 		this.startTime = moment.utc("08:00", "HH:mm");
 		this.endTime = moment.utc("17:00", "HH:mm");
 		this.gap = 30;
-	}
-
-	get timeFieldFormValues(): any {
-		log.debug("CalendarField.calendarFieldFormValues");
-
-		return {
-			startTime: this.startTime,
-			endTime: this.endTime,
-			gap: this.gap,
-			...this.formValues,
-		};
 	}
 
 	get options(): Option[] {
@@ -67,7 +62,6 @@ decorate(TimeField, {
 	startTime: observable,
 	endTime: observable,
 	gap: observable,
-	timeFieldFormValues: computed,
 	isValid: computed,
 	options: computed,
 	optionsForLanguage: computed,

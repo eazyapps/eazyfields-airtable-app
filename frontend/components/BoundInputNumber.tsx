@@ -1,6 +1,6 @@
 import loglevel from "loglevel";
 const log = loglevel.getLogger("BoundInputNumber");
-log.setLevel("debug");
+// log.setLevel("debug");
 
 import React from "react";
 
@@ -51,8 +51,8 @@ const BoundInputNumber = observer(
 		return (
 			<StyledFormItem
 				style={style}
-				name={name}
-				rules={rules}
+				// name={name}
+				// rules={rules}
 				label={label}
 				{...extraProps}
 				{...layout}

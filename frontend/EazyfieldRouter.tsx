@@ -1,6 +1,6 @@
 import loglevel from "loglevel";
 const log = loglevel.getLogger("EazyfieldRouter");
-log.setLevel("debug");
+// log.setLevel("debug");
 
 import React from "react";
 
@@ -30,8 +30,7 @@ const EazyfieldRouter = observer(() => {
 			<Box padding={2}>
 				<Icon name="warning" size={20} />
 				<Text size="large" marginLeft={1} style={{ display: "inline" }}>
-					We're sorry, you don't have the required permissions to create fields
-					in this base.
+					{`We're sorry, you don't have the required permissions to create fields in this base.`}
 				</Text>
 			</Box>
 		);

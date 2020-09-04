@@ -1,6 +1,6 @@
 import loglevel from "loglevel";
 const log = loglevel.getLogger("YearFieldForm");
-log.setLevel("debug");
+// log.setLevel("debug");
 
 import React from "react";
 
@@ -45,21 +45,20 @@ const YearFieldForm = observer(({ field }: { field: YearField }) => {
 		} else if (field.lastYear > field.firstYear + 200) {
 			extraLastYearProps.validateStatus = "warning";
 			extraLastYearProps.help =
-				"The selection range will generate more than 200 options and may crash the block.";
+				"Warning - the selection range will generate more than 200 options and may crash the page.";
 		}
 	}
 
 	return (
 		<EazyfieldForm
 			field={field}
-			formValues={field.yearFieldFormValues}
 			previewValue={
 				typeof field.firstYear == "number" ? field.firstYear : undefined
 			}
 			previewPlaceholder="No valid year range"
 			hideLanguageSelection={true}
 		>
-			<Divider
+			{/* <Divider
 				style={{
 					fontSize: "14px",
 					fontWeight: "normal",
@@ -67,8 +66,8 @@ const YearFieldForm = observer(({ field }: { field: YearField }) => {
 					marginBottom: "8px",
 				}}
 			>
-				Selection range
-			</Divider>
+				Options range
+			</Divider> */}
 			<BoundInputNumber
 				style={{
 					display: "inline-block",

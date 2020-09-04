@@ -1,12 +1,12 @@
 import loglevel from "loglevel";
 const log = loglevel.getLogger("BlockHeader");
-log.setLevel("debug");
+// log.setLevel("debug");
 
 import React from "react";
 
 import styled from "styled-components";
 
-import { Layout, Typography } from "antd";
+import { Layout } from "antd";
 const { Header } = Layout;
 
 import { StyledLogoWrapper, StyledLogoText } from "./StyledComponents";
@@ -22,6 +22,8 @@ const BlockHeader = ({
 	title: string;
 	children?: any;
 }) => {
+	log.debug("BlockHeader.render");
+
 	return (
 		<Header
 			style={{

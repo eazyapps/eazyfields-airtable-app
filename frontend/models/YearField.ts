@@ -1,6 +1,6 @@
 import loglevel from "loglevel";
 const log = loglevel.getLogger("YearField");
-log.setLevel("debug");
+// log.setLevel("debug");
 
 import { observable, computed, decorate } from "mobx";
 
@@ -12,19 +12,14 @@ export default class YearField extends Eazyfield {
 	lastYear: number;
 
 	constructor(language: LanguageIdType) {
-		super(language, "Year");
+		super(language, "Year", () => {
+			return {
+				startTime: this.firstYear,
+				endTime: this.lastYear,
+			};
+		});
 		this.firstYear = 1920;
 		this.lastYear = 2030;
-	}
-
-	get yearFieldFormValues(): any {
-		log.debug("CalendarField.calendarFieldFormValues");
-
-		return {
-			firstYear: this.firstYear,
-			lastYear: this.lastYear,
-			...this.formValues,
-		};
 	}
 
 	get options(): Option[] {
@@ -75,7 +70,6 @@ export default class YearField extends Eazyfield {
 decorate(YearField, {
 	firstYear: observable,
 	lastYear: observable,
-	yearFieldFormValues: computed,
 	isValid: computed,
 	options: computed,
 	optionsForLanguage: computed,

@@ -1,6 +1,6 @@
 import loglevel from "loglevel";
 const log = loglevel.getLogger("BoundTimePicker");
-log.setLevel("debug");
+// log.setLevel("debug");
 
 import { Moment } from "moment";
 
@@ -54,8 +54,8 @@ const BoundTimePicker = observer(
 		return (
 			<StyledFormItem
 				style={style}
-				name={name}
-				rules={rules}
+				// name={name}
+				// rules={rules}
 				label={label}
 				{...extraProps}
 				{...layout}
@@ -63,6 +63,7 @@ const BoundTimePicker = observer(
 				<TimePicker
 					style={{ width: "100%" }}
 					format="HH:mm"
+					value={value}
 					onChange={onChange}
 					allowClear={false}
 				/>

@@ -1,8 +1,9 @@
 import loglevel from "loglevel";
 const log = loglevel.getLogger("EazyfieldsBlock");
-log.setLevel("debug");
+// log.setLevel("debug");
 
 import React from "react";
+import styled from "styled-components";
 import { Layout } from "antd";
 import ErrorBoundary from "./ErrorBoundary";
 import BlockHeader from "./BlockHeader";
@@ -19,6 +20,12 @@ import { Button } from "@airtable/blocks/ui";
 import viewModel from "./BlockViewModel";
 import BaseTracker from "./BaseTracker";
 
+const StyledHelpButton = styled(Button)`
+	&&:focus {
+		box-shadow: none;
+	}
+`;
+
 const ShowHelpButton = () => {
 	log.debug("ShowHelpButton.render");
 
@@ -29,7 +36,7 @@ const ShowHelpButton = () => {
 	};
 
 	return (
-		<Button
+		<StyledHelpButton
 			onClick={onClick}
 			icon="help"
 			style={{ backgroundColor: "transparent" }}

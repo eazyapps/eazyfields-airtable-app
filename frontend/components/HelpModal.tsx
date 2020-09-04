@@ -1,6 +1,7 @@
+/* eslint-disable react/jsx-no-target-blank */
 import loglevel from "loglevel";
 const log = loglevel.getLogger("HelpModal");
-log.setLevel("debug");
+// log.setLevel("debug");
 
 import React from "react";
 import viewModel from "../BlockViewModel";
@@ -43,6 +44,8 @@ const StyledLI = styled.li`
 `;
 
 const HelpModal = observer(() => {
+	log.debug("HelpModal.render");
+
 	if (!viewModel.showHelp) {
 		return null;
 	}
@@ -75,13 +78,16 @@ const HelpModal = observer(() => {
 				</StyledLI>
 				<StyledLI>
 					<Text size="large">
-						Create a time / time slot field and set the options range and the
-						gap in minutes between the options.
+						Create a time field and set the options range and the gap in minutes
+						between options.
 					</Text>
 				</StyledLI>
 			</ul>
 			<Text size="large">
-				<a href="https://superblocks.at/" target="_blank">
+				<a
+					href="https://superblocks.at/eazyfields-block-feedback"
+					target="_blank"
+				>
 					Contact us
 				</a>{" "}
 				if you have improvement suggestions and please report issues

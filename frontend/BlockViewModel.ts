@@ -1,6 +1,6 @@
 import log from "loglevel";
 
-import { observable, decorate, autorun } from "mobx";
+import { observable, decorate, autorun, reaction, action } from "mobx";
 
 import Eazyfield, { EazyfieldType } from "./models/Eazyfield";
 import CountryField from "./models/CountryField";
@@ -15,6 +15,7 @@ export { EazyfieldType } from "./models/Eazyfield";
 export class BlockViewModel {
 	_fields: Map<EazyfieldType, Eazyfield>;
 	activeEazyfieldType: EazyfieldType;
+	activeField: Eazyfield;
 	activeLanguageSaver: null | Function;
 	showHelp: boolean;
 	hasPermissions: boolean;
@@ -34,27 +35,36 @@ export class BlockViewModel {
 		if (this.showHelp) {
 			globalConfig.setAsync(["config", "notFirstRun"], true);
 		}
+		reaction(
+			() => {
+				return this.activeEazyfieldType;
+			},
+			this.fieldTypeChangedReaction,
+			{ fireImmediately: true }
+		);
 		// this.showHelp = true;
 	}
 
-	get activeField(): Eazyfield {
-		let field = this._fields.get(this.activeEazyfieldType);
-		if (!field) {
-			field = this.createField(this.activeEazyfieldType);
-			this._fields.set(this.activeEazyfieldType, field);
+	fieldTypeChangedReaction(fieldType: EazyfieldType) {
+		this.activeField = this._fields.get(fieldType);
+		if (!this.activeField) {
+			this.activeField = this.createField(fieldType);
+			this._fields.set(this.activeEazyfieldType, this.activeField);
+			const activeLanguage = globalConfig.get([
+				"config",
+				"activeLanguage",
+			]) as LanguageIdType;
+			if (activeLanguage) {
+				this.activeField.language = activeLanguage;
+			}
 		} else {
-			field.reset();
+			this.activeField.reset();
 		}
-
-		const activeLanguage = globalConfig.get([
-			"config",
-			"activeLanguage",
-		]) as LanguageIdType;
-		if (activeLanguage) {
-			field.language = activeLanguage;
-		}
-		return field;
 	}
+
+	// TODO reaction for this
+	// } else {
+	// field.reset();
 
 	createField(type: EazyfieldType): Eazyfield {
 		switch (type) {
@@ -78,8 +88,9 @@ export class BlockViewModel {
 
 decorate(BlockViewModel, {
 	activeEazyfieldType: observable,
-	// activeField: computed,
+	activeField: observable,
 	showHelp: observable,
+	fieldTypeChangedReaction: action.bound,
 });
 
 const viewModel = new BlockViewModel();
