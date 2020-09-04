@@ -74,7 +74,7 @@ export default class ErrorBoundary extends Component {
 		const ResizeObserverErrorMessage = "ResizeObserver loop limit exceeded";
 		if (
 			(message &&
-				((typeof error === "string" &&
+				((typeof message === "string" &&
 					message.toString().indexOf(ResizeObserverErrorMessage)) ||
 					(message instanceof ErrorEvent &&
 						message.message.indexOf(ResizeObserverErrorMessage) != -1))) ||
