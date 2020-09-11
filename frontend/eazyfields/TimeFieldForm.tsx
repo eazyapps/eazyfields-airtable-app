@@ -53,7 +53,7 @@ const TimeFieldForm = observer(({ field }: { field: TimeField }) => {
 						message: "Please enter start time",
 					},
 				]}
-				label="Start time"
+				label="Start time:"
 				model={field}
 				prop="startTime"
 			/>
@@ -71,7 +71,7 @@ const TimeFieldForm = observer(({ field }: { field: TimeField }) => {
 						message: "Please enter end time",
 					},
 				]}
-				label="End time"
+				label="End time:"
 				model={field}
 				prop="endTime"
 				{...additionalEndTimeProps}
@@ -85,7 +85,7 @@ const TimeFieldForm = observer(({ field }: { field: TimeField }) => {
 						message: "Please enter gap",
 					},
 				]}
-				label="Gap between values, in minutes"
+				label="Gap between values, in minutes:"
 				model={field}
 				prop="gap"
 				layout={FormItem.getLayoutProps(24)}

@@ -45,7 +45,8 @@ const TableSelector = observer(({ field }: { field: Eazyfield }) => {
 	return (
 		<StyledFormItem
 			// name="table"
-			label="Table to create the field in"
+			label="Table to create the field in:"
+			colon={false}
 			// rules={[{ required: true, message: "Please select a table" }]}
 			validateStatus={field.tableStatus}
 			help={field.tableStatusMessage}

@@ -67,7 +67,7 @@ const EazyfieldForm = observer(
 				<TableSelector field={field} />
 				<BoundInput
 					name="name"
-					label="Unique name for single select field"
+					label="Unique name for single select field:"
 					model={field}
 					prop="name"
 					rules={field.nameRules}
@@ -79,7 +79,7 @@ const EazyfieldForm = observer(
 					<BoundSelect
 						name="language"
 						rules={[{ required: true, message: "Please select a language" }]}
-						label="Language for field values"
+						label="Language for field values:"
 						model={field}
 						prop="language"
 						showSearch={true}
@@ -90,7 +90,8 @@ const EazyfieldForm = observer(
 				) : null}
 				{children}
 				<StyledFormItem
-					label="Preview of field options"
+					label="Preview of field options:"
+					colon={false}
 					{...FormItem.getLayoutProps(24)}
 				>
 					{field.options.length > 0 ? (

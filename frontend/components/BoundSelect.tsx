@@ -64,6 +64,7 @@ const BoundSelect = observer(
 				// name={name}
 				// rules={rules}
 				label={label}
+				colon={false}
 				{...layout}
 				{...additionalProps}
 			>

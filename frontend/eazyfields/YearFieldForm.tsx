@@ -78,7 +78,7 @@ const YearFieldForm = observer(({ field }: { field: YearField }) => {
 				name="firstYear"
 				value={field.firstYear}
 				rules={firstYearRules}
-				label="First year"
+				label="First year:"
 				model={field}
 				prop="firstYear"
 			/>
@@ -92,7 +92,7 @@ const YearFieldForm = observer(({ field }: { field: YearField }) => {
 				name="lastYear"
 				value={field.lastYear}
 				rules={lastYearRules}
-				label="Last year"
+				label="Last year:"
 				model={field}
 				prop="lastYear"
 				{...extraLastYearProps}

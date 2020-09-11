@@ -21,7 +21,7 @@ const CalendarFieldForm = observer(({ field }: { field: CalendarField }) => {
 			<BoundSelect
 				name="width"
 				rules={[{ required: true, message: "Please select a format" }]}
-				label="Format of field values"
+				label="Format of field values:"
 				model={field}
 				prop="width"
 				options={widthOptions}

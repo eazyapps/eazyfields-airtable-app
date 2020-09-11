@@ -54,6 +54,7 @@ const BoundInputNumber = observer(
 				// name={name}
 				// rules={rules}
 				label={label}
+				colon={false}
 				{...extraProps}
 				{...layout}
 			>

@@ -39,6 +39,7 @@ const BoundInput = observer(
 				// name={name}
 				// rules={rules}
 				label={label}
+				colon={false}
 				validateStatus={validateStatus}
 				help={help}
 				{...layout}
