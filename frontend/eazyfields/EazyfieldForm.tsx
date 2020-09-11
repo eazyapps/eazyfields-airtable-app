@@ -58,12 +58,12 @@ const EazyfieldForm = observer(
 			inputValue: string,
 			option: { name: string }
 		) => {
-			log.debug(
-				"EazyfieldForm.filterLanguageOption, option:",
-				option,
-				", inputValue:",
-				inputValue
-			);
+			// log.debug(
+			// 	"EazyfieldForm.filterLanguageOption, option:",
+			// 	option,
+			// 	", inputValue:",
+			// 	inputValue
+			// );
 			return option.name.toLowerCase().startsWith(inputValue.toLowerCase());
 		};
 
