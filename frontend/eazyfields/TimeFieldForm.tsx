@@ -1,6 +1,6 @@
 import loglevel from "loglevel";
 const log = loglevel.getLogger("TimeFieldForm");
-// log.setLevel("debug");
+log.setLevel("info");
 
 import React from "react";
 

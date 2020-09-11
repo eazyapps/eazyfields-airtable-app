@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-no-target-blank */
 import loglevel from "loglevel";
 const log = loglevel.getLogger("HelpModal");
-// log.setLevel("debug");
+log.setLevel("info");
 
 import React from "react";
 import viewModel from "../BlockViewModel";

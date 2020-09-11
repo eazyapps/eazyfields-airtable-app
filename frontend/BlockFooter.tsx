@@ -13,7 +13,7 @@ import { EditOutlined } from "@ant-design/icons";
 import { StyledLogoWrapper, StyledLogoText } from "./StyledComponents";
 
 const log = loglevel.getLogger("BlockFooter");
-// log.setLevel("debug");
+log.setLevel("info");
 
 const StyledLogo = styled.img`
 	max-height: 12px;

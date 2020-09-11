@@ -1,6 +1,6 @@
 import loglevel from "loglevel";
 const log = loglevel.getLogger("BoundTimePicker");
-// log.setLevel("debug");
+log.setLevel("info");
 
 import { Moment } from "moment";
 

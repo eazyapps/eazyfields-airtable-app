@@ -1,6 +1,6 @@
 import loglevel from "loglevel";
 const log = loglevel.getLogger("index");
-// log.setLevel("debug");
+log.setLevel("info");
 
 // const _listeners = [];
 
@@ -23,7 +23,7 @@ import { initializeBlock, loadCSSFromURLAsync } from "@airtable/blocks/ui";
 import EazyfieldsBlock from "./EazyfieldsBlock";
 
 loadCSSFromURLAsync(
-	"https://cdnjs.cloudflare.com/ajax/libs/antd/4.6.2/antd.min.css"
+	"https://cdnjs.cloudflare.com/ajax/libs/antd/4.3.5/antd.min.css"
 ).then(() =>
 	initializeBlock(() => (
 		// <SuperblockWrapper>

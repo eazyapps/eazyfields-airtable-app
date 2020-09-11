@@ -1,6 +1,6 @@
 import loglevel from "loglevel";
 const log = loglevel.getLogger("EazyfieldForm");
-// log.setLevel("debug");
+log.setLevel("info");
 
 import React, { useState } from "react";
 
@@ -58,7 +58,12 @@ const EazyfieldForm = observer(
 			inputValue: string,
 			option: { name: string }
 		) => {
-			// log.debug("EazyfieldForm.filterLanguageOption, option:", option);
+			log.debug(
+				"EazyfieldForm.filterLanguageOption, option:",
+				option,
+				", inputValue:",
+				inputValue
+			);
 			return option.name.toLowerCase().startsWith(inputValue.toLowerCase());
 		};
 

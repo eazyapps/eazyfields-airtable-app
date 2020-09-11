@@ -1,6 +1,6 @@
 import loglevel from "loglevel";
 const log = loglevel.getLogger("EazyfieldsBlock");
-// log.setLevel("debug");
+log.setLevel("info");
 
 import React from "react";
 import styled from "styled-components";

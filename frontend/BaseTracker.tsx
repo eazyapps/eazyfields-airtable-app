@@ -1,6 +1,6 @@
 import loglevel from "loglevel";
 const log = loglevel.getLogger("BaseTracker");
-// log.setLevel("debug");
+log.setLevel("info");
 
 import { useBase } from "@airtable/blocks/ui";
 import viewModel from "./BlockViewModel";

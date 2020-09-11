@@ -1,6 +1,6 @@
 import loglevel from "loglevel";
 const log = loglevel.getLogger("StyledComponents");
-// log.setLevel("debug");
+log.setLevel("info");
 
 import styled, { css } from "styled-components";
 

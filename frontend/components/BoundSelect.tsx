@@ -1,6 +1,6 @@
 import loglevel from "loglevel";
 const log = loglevel.getLogger("BoundSelect");
-// log.setLevel("debug");
+log.setLevel("info");
 
 import React from "react";
 
@@ -52,6 +52,10 @@ const BoundSelect = observer(
 
 		const value = model[prop];
 
+		log.debug("BoundSelect, value:", value);
+
+		// log.debug("BoundSelect, options:", toJS(options));
+
 		const additionalProps: {
 			placeholder?: string;
 		} = {};
@@ -73,6 +77,7 @@ const BoundSelect = observer(
 					onSelect={onSelect}
 					showSearch={showSearch}
 					filterOption={filterOption}
+					// dropdownMatchSelectWidth={true}
 				>
 					{options.map((option) => (
 						<Option key={option.value} value={option.value} name={option.name}>

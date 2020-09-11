@@ -1,6 +1,6 @@
 import loglevel from "loglevel";
 const log = loglevel.getLogger("BoundInputNumber");
-// log.setLevel("debug");
+log.setLevel("info");
 
 import React from "react";
 
