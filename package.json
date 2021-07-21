@@ -30,6 +30,7 @@
 	},
 	"scripts": {
 		"start": "block run --default-port 9004",
+		"release": "block release",
 		"lint": "eslint --ext .js,.jsx,.ts,.tsx frontend"
 	}
 }
