@@ -76,7 +76,13 @@ export const StyledFormContent = styled(Content)`
 
 /* background-color: ${(props) => props.backgroundcolor};
 		border-color: ${(props) => props.bordercolor}; */
-export const StyledSubmitButton = styled(Button)`
+export const StyledPrimaryButton = styled(Button)`
+	&&:hover {
+		opacity: 0.8;
+	}
+`;
+
+export const StyledSubmitButton = styled(StyledPrimaryButton)`
 	margin-bottom: 8px;
 	${(props) => (props.justified ? "width: 100%;" : null)}
 

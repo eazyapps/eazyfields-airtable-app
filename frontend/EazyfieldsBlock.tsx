@@ -5,7 +5,7 @@ log.setLevel("info");
 import React from "react";
 import styled from "styled-components";
 import { Button, Layout } from "antd";
-import { InfoCircleOutlined } from "@ant-design/icons";
+import { QuestionCircleOutlined } from "@ant-design/icons";
 import ErrorBoundary from "./ErrorBoundary";
 import BlockHeader from "./BlockHeader";
 import BlockFooter from "./BlockFooter";
@@ -38,7 +38,7 @@ const ShowHelpButton = () => {
 	return (
 		<StyledHelpButton
 			type="text"
-			icon={<InfoCircleOutlined />}
+			icon={<QuestionCircleOutlined />}
 			onClick={onClick}
 			// style={{ backgroundColor: "transparent" }}
 		/>

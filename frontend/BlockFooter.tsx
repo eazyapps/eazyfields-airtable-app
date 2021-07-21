@@ -32,10 +32,6 @@ export default function BlockFooter({
 }) {
 	log.debug("Footer.render");
 
-	const onFeedback = () => {
-		window.open("https://superblocks.at/eazyfields-block-feedback", "_blank");
-	};
-
 	return (
 		<Footer
 			style={{
@@ -57,8 +53,9 @@ export default function BlockFooter({
 				size="small"
 				type="text"
 				icon={<EditOutlined />}
-				onClick={onFeedback}
 				style={{ height: "100%" }}
+				href="https://eazyform.app/form/mf-29524969"
+				target="_blank"
 			>
 				Feedback? Let us know.
 			</Button>
