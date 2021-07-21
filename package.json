@@ -16,7 +16,7 @@
 		"styled-components": "^5.1.1"
 	},
 	"devDependencies": {
-		"@airtable/blocks-cli": "0.0.56",
+		"@airtable/blocks-cli": "0.0.64",
 		"@types/bent": "^7.0.2",
 		"@types/chai": "^4.2.11",
 		"@types/moment": "^2.13.0",
@@ -29,6 +29,7 @@
 		"typescript": "^3.9.3"
 	},
 	"scripts": {
+		"start": "block run --default-port 9004",
 		"lint": "eslint --ext .js,.jsx,.ts,.tsx frontend"
 	}
 }

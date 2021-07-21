@@ -12,16 +12,10 @@ const { Header } = Layout;
 import { StyledLogoWrapper, StyledLogoText } from "./StyledComponents";
 
 const StyledLogo = styled.img`
-	max-height: 16px;
+	height: 16px;
 `;
 
-const BlockHeader = ({
-	title,
-	children,
-}: {
-	title: string;
-	children?: any;
-}) => {
+const BlockHeader = ({ title, children }: { title: string; children?: any }) => {
 	log.debug("BlockHeader.render");
 
 	return (
@@ -43,8 +37,8 @@ const BlockHeader = ({
 				paddingRight: "12px",
 			}}
 		>
-			<StyledLogoWrapper href="https://superblocks.at" target="_blank">
-				<StyledLogo src="https://superblocks.at/wp-content/uploads/superblocks-icon.png" />
+			<StyledLogoWrapper href="https://eazyapps.dev/airtable" target="_blank">
+				<StyledLogo src="https://cdn.eazyapps.dev/eazyapps-logo.svg" />
 				<StyledLogoText strong={true}>{title}</StyledLogoText>
 			</StyledLogoWrapper>
 			{children}

@@ -16,7 +16,7 @@ const log = loglevel.getLogger("BlockFooter");
 log.setLevel("info");
 
 const StyledLogo = styled.img`
-	max-height: 12px;
+	height: 12px;
 `;
 
 const StyledFooterLogoText = styled(StyledLogoText)`
@@ -50,10 +50,7 @@ export default function BlockFooter({
 				display: "flex",
 				justifyContent: "space-between",
 				alignItems: "center",
-				paddingTop: 0,
-				paddingBottom: 0,
-				paddingLeft: "0px",
-				paddingRight: "8px",
+				padding: "0 8px 0 0",
 			}}
 		>
 			<Button
@@ -82,9 +79,9 @@ export default function BlockFooter({
 				>
 					Powered by:{" "}
 				</Text>
-				<StyledLogoWrapper href="https://superblocks.at" target="_blank">
-					<StyledLogo src="https://superblocks.at/wp-content/uploads/superblocks-icon.png" />
-					<StyledFooterLogoText strong={true}>Superblocks</StyledFooterLogoText>
+				<StyledLogoWrapper href="https://eazyapps.dev/airtable" target="_blank">
+					<StyledLogo src="https://cdn.eazyapps.dev/eazyapps-logo.svg" />
+					<StyledFooterLogoText strong={true}>Eazyapps</StyledFooterLogoText>
 				</StyledLogoWrapper>
 			</div>
 		</Footer>
