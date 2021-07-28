@@ -65,8 +65,4 @@ We at [Eazyapps](https://eazyapps.dev) have already developed quite a few [airta
 
 ## How to remix this app
 
-1. Create a new base (or you can use an existing base).
-
-2. Create a new custom app in your base (see Create a new custom app, selecting "Remix from Github" as your template.
-
-3. From the root of your new app, run block run.
+See [here](https://www.airtable.com/developers/apps/guides/remix-from-github) for instructions.
