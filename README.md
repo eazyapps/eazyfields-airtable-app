@@ -1,10 +1,10 @@
-# Eazyfields block by [Superblocks](https://superblocks.at)
+# Eazyfields airtable app by [Eazyapps](https://eazyapps.dev)
 
-[Winner](https://devpost.com/software/superfields) in the [Airtable Blocks Contest](https://airtable.devpost.com/).
+[Winner](https://devpost.com/software/superfields) of the [Airtable Apps Contest](https://airtable.devpost.com/).
 
 ## Table of Contents
 
-- [About this block](#about-this-block)
+- [About this app](#about-this-block)
 - [Screenshot](#screenshot)
 - [Installation](#installation)
 - [Contributions](#contributions)
@@ -13,11 +13,11 @@
 - [Looking for help with blocks development?](#looking-for-help-with-blocks-development?)
 - [How to remix this block](#how-to-remix-this-block)
 
-## About this block
+## About this app
 
 Create Airtable fields with pre-populated options for:
 
-- Country, month or weekday - **in any world language**
+- Country, month or day of week - **in any world language**
 
 - Year - specifying the options range
 
@@ -25,25 +25,15 @@ Create Airtable fields with pre-populated options for:
 
 ## Screenshot
 
-![Eazyfields block](https://superblocks.at/eazyfields-block-screenshot-1/)
+![Eazyfields app](https://softr-prod.imgix.net/applications/9bfb7bc1-ef08-416a-acea-ed1eaedc2e1a/assets/3a67caa6-414a-4990-9891-839dc9b54669.png)
 
 ## Installation
 
-1. This is a custom block. To install custom blocks, you need to join Airtable's custom blocks developer preview, by filling [this form](https://airtable.com/shrEvq5IlQqYxWkaS).
-
-2. Follow the instructions [here](https://airtable.com/developers/blocks/guides/hello-world-tutorial#create-a-new-block) to create a new block - but in _Start from an example_, choose _Remix from GitHub_ and in _GitHub repository_, enter the URL for this repository:
-
-https://github.com/superblocks-at/eazyfields-block
-
-3. Install the block into your base by releasing it, using the following command:
-
-```
-block release
-```
+you can install this app from the airtable marketplace [here](https://airtable.com/marketplace/blkwgLQGZ8K4ZE6d1/eazyfields).
 
 ## Contributions
 
-Are more than welcome. The goal is to have the community expand the block and it's field selection so that the entire Airtable community can benefit.
+Are more than welcome. The goal is to have the community expand the app and it's field selection so that the entire Airtable community can benefit.
 
 Some things that might benefit the community:
 
@@ -59,7 +49,7 @@ Some things that might benefit the community:
 
 ## Implementation details
 
-This block uses:
+This app uses:
 
 1. Data from [CLDR](http://cldr.unicode.org/) (the unicode common locale data repository) for localized country, month and day names. The software library used to get CLDR data is the compact and performant [@phensley/cldr](@phensley/cldr) npm package.
 
@@ -69,14 +59,10 @@ This block uses:
 - Allows for easier and faster testing.
 - Creates components that re-render truly only when something they directly depend on in their rendering changes.
 
-## Looking for help with blocks development?
+## Looking for help with custom airtable app development?
 
-We at [Superblocks](https://superblocks.at) have already developed quite a few [blocks](https://superblocks.at/#blocks) and more are coming soon. We also offer extremely quick and reliable [block development services](https://superblocks.at/#services). Feel free to [contact us](https://superblocks.at/#services).
+We at [Eazyapps](https://eazyapps.dev) have already developed quite a few [airtable apps](https://www.eazyapps.dev/airtable) and more are coming soon. We also offer extremely quick and reliable [airtable app development services](https://www.eazyapps.dev/airtable/#services). Feel free to [contact us](https://www.eazyapps.dev/airtable-contact).
 
-## How to remix this block
+## How to remix this app
 
-1. Create a new base (or you can use an existing base).
-
-2. Create a new block in your base (see Create a new block, selecting "Remix from Github" as your template.
-
-3. From the root of your new block, run block run.
+See [here](https://www.airtable.com/developers/apps/guides/remix-from-github) for instructions.

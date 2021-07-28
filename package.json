@@ -1,6 +1,6 @@
 {
 	"dependencies": {
-		"@airtable/blocks": "0.0.55",
+		"@airtable/blocks": "^1.8.0",
 		"@phensley/cldr": "^1.2.1",
 		"antd": "4.3.5",
 		"bent": "^7.3.5",
@@ -16,7 +16,6 @@
 		"styled-components": "^5.1.1"
 	},
 	"devDependencies": {
-		"@airtable/blocks-cli": "0.0.56",
 		"@types/bent": "^7.0.2",
 		"@types/chai": "^4.2.11",
 		"@types/moment": "^2.13.0",
@@ -29,6 +28,8 @@
 		"typescript": "^3.9.3"
 	},
 	"scripts": {
+		"start": "block run --default-port 9004",
+		"release": "block release",
 		"lint": "eslint --ext .js,.jsx,.ts,.tsx frontend"
 	}
 }

@@ -16,7 +16,7 @@ const log = loglevel.getLogger("BlockFooter");
 log.setLevel("info");
 
 const StyledLogo = styled.img`
-	max-height: 12px;
+	height: 12px;
 `;
 
 const StyledFooterLogoText = styled(StyledLogoText)`
@@ -32,10 +32,6 @@ export default function BlockFooter({
 }) {
 	log.debug("Footer.render");
 
-	const onFeedback = () => {
-		window.open("https://superblocks.at/eazyfields-block-feedback", "_blank");
-	};
-
 	return (
 		<Footer
 			style={{
@@ -50,18 +46,16 @@ export default function BlockFooter({
 				display: "flex",
 				justifyContent: "space-between",
 				alignItems: "center",
-				paddingTop: 0,
-				paddingBottom: 0,
-				paddingLeft: "0px",
-				paddingRight: "8px",
+				padding: "0 8px 0 0",
 			}}
 		>
 			<Button
 				size="small"
 				type="text"
 				icon={<EditOutlined />}
-				onClick={onFeedback}
 				style={{ height: "100%" }}
+				href="https://eazyform.app/form/mf-29524969"
+				target="_blank"
 			>
 				Feedback? Let us know.
 			</Button>
@@ -82,9 +76,9 @@ export default function BlockFooter({
 				>
 					Powered by:{" "}
 				</Text>
-				<StyledLogoWrapper href="https://superblocks.at" target="_blank">
-					<StyledLogo src="https://superblocks.at/wp-content/uploads/superblocks-icon.png" />
-					<StyledFooterLogoText strong={true}>Superblocks</StyledFooterLogoText>
+				<StyledLogoWrapper href="https://eazyapps.dev/airtable" target="_blank">
+					<StyledLogo src="https://cdn.eazyapps.dev/eazyapps-logo.svg" />
+					<StyledFooterLogoText strong={true}>Eazyapps</StyledFooterLogoText>
 				</StyledLogoWrapper>
 			</div>
 		</Footer>

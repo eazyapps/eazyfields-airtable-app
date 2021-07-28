@@ -4,7 +4,8 @@ log.setLevel("info");
 
 import React from "react";
 import styled from "styled-components";
-import { Layout } from "antd";
+import { Button, Layout } from "antd";
+import { QuestionCircleOutlined } from "@ant-design/icons";
 import ErrorBoundary from "./ErrorBoundary";
 import BlockHeader from "./BlockHeader";
 import BlockFooter from "./BlockFooter";
@@ -16,13 +17,12 @@ import {
 import MainMenu from "./MainMenu";
 import EazyfieldRouter from "./EazyfieldRouter";
 import HelpModal from "./components/HelpModal";
-import { Button } from "@airtable/blocks/ui";
 import viewModel from "./BlockViewModel";
 import BaseTracker from "./BaseTracker";
 
 const StyledHelpButton = styled(Button)`
 	&&:focus {
-		box-shadow: none;
+		background-color: transparent;
 	}
 `;
 
@@ -37,9 +37,10 @@ const ShowHelpButton = () => {
 
 	return (
 		<StyledHelpButton
+			type="text"
+			icon={<QuestionCircleOutlined />}
 			onClick={onClick}
-			icon="help"
-			style={{ backgroundColor: "transparent" }}
+			// style={{ backgroundColor: "transparent" }}
 		/>
 	);
 };
